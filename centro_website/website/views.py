@@ -3,9 +3,6 @@ from django.http import HttpResponse
 
 # Create your views here.
 
-def index(request):
-    return render(request, 'index.html')
-
 def about(request):
     return render(request, 'about.html')
 
@@ -18,11 +15,29 @@ def blogsingle(request):
 def contact(request):
     return render(request, 'contact.html')
 
-def courses(request):
-    return render(request, 'courses.html')
+def directory(request):
+    return render(request, 'directory.html')
 
-def pricing(request):
-    return render(request, 'pricing.html')
+def donations(request):
+    return render(request, 'donations.html')
 
-def teacher(request):
-    return render(request, 'teacher.html')
+def index(request):
+    return render(request, 'index.html')
+
+def information(request):
+    return render(request, 'information.html')
+
+def report(request):
+    return render(request, 'report.html')
+
+def therapies(request):
+    return render(request, 'therapies.html')
+
+def tips(request):
+    return render(request, 'tips.html')
+
+def training(request):
+    return render(request, 'training.html')
+
+def tutorial(request):
+    return render(request, 'tutorial.html')

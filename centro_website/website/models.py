@@ -102,7 +102,8 @@ class Disability_card(models.Model):
         (VISUAL, 'Discapacidad Visual'),
     ]
 
-    disability = models.CharField(max_length=2, choices=DISABILITY_OPTIONS)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    disability_type = models.CharField(max_length=2, choices=DISABILITY_OPTIONS)
     disability_description = models.TextField()
     disability_percentage = models.PositiveSmallIntegerField()
 
@@ -118,8 +119,8 @@ class Forum_response(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     response = models.CharField(max_length=500)
     date = models.DateTimeField(auto_now_add=True)
-    like = models.PositiveIntegerField()
-    dislike = models.IntegerField()
+    like = models.PositiveIntegerField(default=0)
+    dislike = models.IntegerField(default=0)
 
 class Therapy_live(models.Model):
     therapist = models.ForeignKey(Forum_entry, on_delete=models.CASCADE, null=True)

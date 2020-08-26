@@ -25,13 +25,13 @@ class User(models.Model):
     sex = models.CharField(max_length=1, choices=SEX_OPTIONS, default=MALE)
     civil_status = models.CharField(max_length=150)
     phone_number_1 = models.PositiveIntegerField()
-    phone_number_2 = models.PositiveIntegerField()
+    phone_number_2 = models.PositiveIntegerField(null=True)
     email = models.EmailField(max_length=250)
     password = models.CharField(max_length=25)
     direction = models.ForeignKey('Direction', on_delete=models.DO_NOTHING, null=True)
-    job_title = models.CharField(max_length=500)
-    degree = models.CharField(max_length=500)
-    biography = models.TextField()
+    job_title = models.CharField(max_length=500, null=True)
+    degree = models.CharField(max_length=500, null=True)
+    biography = models.TextField(null=True)
 
 class Patient(models.Model):
     MALE = 'M'
@@ -165,7 +165,7 @@ class Tip(models.Model):
     category = models.CharField(max_length=2, choices=CATEGORY_OPTIONS)
     subject = models.CharField(max_length=200)
     description = models.CharField(max_length=1500)
-    url = models.CharField(max_length=500)
+    url = models.CharField(max_length=500, null=True)
 
 class Therapeutic_center(models.Model):
     name = models.CharField(max_length=100)

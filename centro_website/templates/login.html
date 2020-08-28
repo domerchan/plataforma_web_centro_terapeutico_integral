@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{% if request.session.user_email %}
+<head>
+    <meta http-equiv='refresh' content='0; URL=index.html'>
+</head>
+{% endif %}
 <head>
     <title>Login</title>
     {% include 'includes/head.html'%} {% block head %} {% endblock %}
@@ -25,7 +29,15 @@
         <div class="container">
             <div class="row d-flex align-items-stretch no-gutters">
                 <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
-                    <form action="#" method="POST">
+                    <form action="/iniciarSesion/" method="POST">{% csrf_token %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert">
+                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                    <strong>¡Error! </strong>{{ message }}.
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                         <div class="form-group">
                             <input type="email" id="email" name="email" class="form-control" placeholder="Correo Electrónico" required>
                         </div>

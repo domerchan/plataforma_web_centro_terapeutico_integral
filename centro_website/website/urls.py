@@ -21,4 +21,6 @@ urlpatterns = [
     path('tutorial.html', views.tutorial, name='tutorial'),
 
     path('registrar/', views.registrar),
+    path('iniciarSesion/', views.iniciarSesion),
+    path('logout/', views.logout),
 ]

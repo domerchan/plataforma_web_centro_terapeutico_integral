@@ -1,9 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import RequestContext
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.utils.deprecation import MiddlewareMixin
 from website.models import User
 from website.models import Direction
 from website.forms import UserForm
-from django.shortcuts import redirect
+
 
 # Create your views here.
 
@@ -76,10 +82,50 @@ def registrar(request):
         
         direccion=Direction(main_street=dir1, secondary_street=dir2, house_number=dir3, reference=dir4) 
         direccion.save()
-        usuario=User(first_name=nombres, last_name=apellidos, identity_card=cedula, rol=rol, birth=birth, sex=sex, civil_status=status, phone_number_1=tel1, phone_number_2=tel2, email=email, direction=direccion, job_title=job, degree=degree, biography=bio)
+        usuario=User(first_name=nombres, last_name=apellidos, identity_card=cedula, rol=rol, birth=birth, sex=sex, civil_status=status, phone_number_1=tel1, phone_number_2=tel2, email=email, password=password, direction=direccion, job_title=job, degree=degree, biography=bio)
         usuario.save()
 
         response = redirect('login')
         return response
     else:
         return render(request, "index.html")
+
+def iniciarSesion(request):
+    if request.method=="POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
+        try:
+            user = User.objects.get(email=email)
+        except:
+            messages.success(request, 'Usuario o Contraseña Incorrecto')
+            response = redirect('login')
+            return response
+        
+        if user.password != password:
+            messages.success(request, 'Usuario o Contraseña Incorrecto')        
+            response = redirect('login')
+            return response
+        else: 
+            user = User.objects.get(email=email)
+            request.session['user_email'] = email
+            usuario = request.session['user_email']
+            if 'user_email' in request.session:
+                #return HttpResponse(usuario)
+                response = redirect('index')
+                return response
+            else:
+                response = redirect('index')
+                return HttpResponse("Incorrecto")
+                #return response
+            
+
+def logout(request):
+    if 'user_email' in request.session:
+        del request.session['user_email']
+        response = redirect('login')
+        return response
+    else:
+        response = redirect('index')
+        return response
+
+    

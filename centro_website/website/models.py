@@ -23,7 +23,7 @@ class User(models.Model):
     rol = models.CharField(max_length=2, choices=ROL_OPTIONS, default=REPRESENTATIVE)
     birth = models.DateField()
     sex = models.CharField(max_length=1, choices=SEX_OPTIONS, default=MALE)
-    civil_status = models.CharField(max_length=150)
+    civil_status = models.CharField(max_length=150, null=True)
     phone_number_1 = models.PositiveIntegerField()
     phone_number_2 = models.PositiveIntegerField(null=True)
     email = models.EmailField(max_length=250)

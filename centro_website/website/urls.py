@@ -23,4 +23,5 @@ urlpatterns = [
     path('registrar/', views.registrar),
     path('iniciarSesion/', views.iniciarSesion),
     path('logout/', views.logout),
+    path('enviarCorreo/', views.enviarCorreo),
 ]

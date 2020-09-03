@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+{% if request.session.user_email %}
+<head>
+    <meta http-equiv='refresh' content='0; URL=index.html'>
+</head>
+{% endif %}
+<head>
+    <title>Login</title>
+    {% include 'includes/head.html'%} {% block head %} {% endblock %}
+</head>
+
+<body>
+    {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
+
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-2 bread">Iniciar Sesión</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Registro <i class="ion-ios-arrow-forward"></i></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+        <div class="container">
+            <div class="row d-flex align-items-stretch no-gutters">
+                <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
+                    <form action="/iniciarSesion/" method="POST">{% csrf_token %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert">
+                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                    <strong>¡Error! </strong>{{ message }}.
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Correo Electrónico" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Iniciar Sesión" class="btn btn-primary py-3 px-5">
+                        </div>
+                    </form>
+                </div>
+                <!--<div class="col-md-6 d-flex align-items-stretch">
+                    <div id="map"></div>
+                </div>-->
+            </div>
+        </div>
+    </section>
+
+    {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+    {% include 'includes/js.html'%} {% block js %} {% endblock %}
+
+</body>
+
+</html>

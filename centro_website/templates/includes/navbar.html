@@ -2,7 +2,7 @@
     <div class="container d-flex align-items-center">
         <!--a class="navbar-brand" href="index.html">Kiddos</a-->
         <div class="block-21 mb-5 d-flex">
-            <a href="index.html" class="logo-img blog-img mr-4" style="background-image: url(../static/website/images/logo.png);"></a>
+            <a href="index.html" class="logo-img blog-img mr-4 logo" style="background-image: url(../static/website/images/logo.png);"></a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
@@ -30,6 +30,18 @@
                 <li class="nav-item"><a href="tutorial.html" class="nav-link">Tutoriales</a></li>
                 <li class="nav-item"><a href="report.html" class="nav-link">Reportes</a></li>
                 <li class="nav-item"><a href="directory.html" class="nav-link">Directorio</a></li>
+                {% if request.session.user_email %}
+                <li class="nav-item"><a href="#" class="nav-link pl-0">{{ request.session.user_email }}</a>
+                    <ul class="sub-menu">
+                        <li class="nav-item"><a href="therapies.html" class="nav-link">Perfil</a></li>
+                        <li class="nav-item"><a href="tips.html" class="nav-link">Próximas Terapias</a></li>
+                        <li class="nav-item"><a href="/logout/" class="nav-link">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item"><a href="login.html" class="nav-link">Iniciar Sesión</a></li>
+                <li class="nav-item"><a href="registro.html" class="nav-link">Registrarse</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -41,7 +53,7 @@
         margin-bottom: 0px !important;
     }
     
-    .block-21 .blog-img {
+    .block-21 .logo {
         width: 130px !important;
     }
     

@@ -10,7 +10,8 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="index.html" class="nav-link pl-0">Inicio</a>
+                <li class="nav-item active"><a href="index.html" class="nav-link">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link">Acerca de</a>
                     <ul class="sub-menu">
                         <li class="nav-item"><a href="about.html" class="nav-link">Quienes Somos</a></li>
                         <li class="nav-item"><a href="information.html" class="nav-link">Información general</a></li>
@@ -19,7 +20,7 @@
                     </ul>
                 </li>
 
-                <li class="nav-item"><a href="#" class="nav-link pl-0">Ayuda</a>
+                <li class="nav-item"><a class="nav-link">Ayuda</a>
                     <ul class="sub-menu">
                         <li class="nav-item"><a href="therapies.html" class="nav-link">Terapias</a></li>
                         <li class="nav-item"><a href="tips.html" class="nav-link">Tips</a></li>
@@ -31,7 +32,7 @@
                 <li class="nav-item"><a href="report.html" class="nav-link">Reportes</a></li>
                 <li class="nav-item"><a href="directory.html" class="nav-link">Directorio</a></li>
                 {% if request.session.user_email %}
-                <li class="nav-item"><a href="#" class="nav-link pl-0">{{ request.session.user_email }}</a>
+                <li class="nav-item"><a href="#" class="nav-link">{{ request.session.user_email }}</a>
                     <ul class="sub-menu">
                         <li class="nav-item"><a href="therapies.html" class="nav-link">Perfil</a></li>
                         <li class="nav-item"><a href="tips.html" class="nav-link">Próximas Terapias</a></li>
@@ -62,6 +63,35 @@
         padding-bottom: 5px !important;
     }
     
+    .ftco-navbar-light .navbar-nav>.nav-item .nav-link:hover {
+        font-weight: bold;
+    }
+    
+    @media (max-width: 991.98px) {
+        .ftco-navbar-light .navbar-nav {
+            padding-bottom: 10px;
+        }
+        .ftco-navbar-light .navbar-nav>.nav-item>.nav-link {
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: .9rem;
+            padding-bottom: .9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .ftco-navbar-light .navbar-nav>.nav-item>.nav-link:hover {
+            color: #fff;
+        }
+        .ftco-navbar-light {
+            background: #000000 !important;
+            position: relative;
+            top: 0;
+            padding: 10px 15px;
+        }
+        .sub-menu {
+            background: none;
+        }
+    }
+    
     .sub-menu li a {
         color: black !important;
         text-decoration: none;
@@ -74,6 +104,16 @@
         background-color: #ffffff;
         padding: 10px 15px;
         list-style: none;
+        @include media-breakpoint-down(md) {
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: .9rem;
+            padding-bottom: .9rem;
+            color: rgba(255, 255, 255, .7);
+            &:hover {
+                color: $white;
+            }
+        }
     }
     
     .navbar-nav li:hover>.sub-menu {

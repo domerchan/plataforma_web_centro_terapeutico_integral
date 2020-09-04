@@ -8,55 +8,57 @@ from django.contrib.auth.models import User
 from django.utils.deprecation import MiddlewareMixin
 from website.models import User
 from website.models import Direction
+from website.models import Therapeutic_center
 from website.forms import UserForm
 
 
 # Create your views here.
+center_data = Therapeutic_center.objects.first()
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'about.html', {'center_data':center_data})
 
 def blog(request):
-    return render(request, 'blog.html')
+    return render(request, 'blog.html', {'center_data':center_data})
 
 def blogsingle(request):
-    return render(request, 'blog-single.html')
+    return render(request, 'blog-single.html', {'center_data':center_data})
 
 def contact(request):
-    return render(request, 'contact.html')
+    return render(request, 'contact.html', {'center_data':center_data})
 
 def directory(request):
-    return render(request, 'directory.html')
+    return render(request, 'directory.html', {'center_data':center_data})
 
 def donations(request):
-    return render(request, 'donations.html')
+    return render(request, 'donations.html', {'center_data':center_data})
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'center_data':center_data})
 
 def information(request):
-    return render(request, 'information.html')
+    return render(request, 'information.html', {'center_data':center_data})
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'center_data':center_data})
 
 def registro(request):
-    return render(request, 'registro.html')
+    return render(request, 'registro.html', {'center_data':center_data})
 
 def report(request):
-    return render(request, 'report.html')
+    return render(request, 'report.html', {'center_data':center_data})
 
 def therapies(request):
-    return render(request, 'therapies.html')
+    return render(request, 'therapies.html', {'center_data':center_data})
 
 def tips(request):
-    return render(request, 'tips.html')
+    return render(request, 'tips.html', {'center_data':center_data})
 
 def training(request):
-    return render(request, 'training.html')
+    return render(request, 'training.html', {'center_data':center_data})
 
 def tutorial(request):
-    return render(request, 'tutorial.html')
+    return render(request, 'tutorial.html', {'center_data':center_data})
 
 def registrar(request):
     if request.method=="POST":

@@ -3,31 +3,26 @@
         <div class="row no-gutters d-flex align-items-start align-items-center px-3 px-md-0">
             <div class="col-lg-12 d-block">
                 <div class="row d-flex">
-                    <div class="col-md-5 pr-4 d-flex topper align-items-center">
+                    <div class="col-md-5 pr-4 d-flex topper align-items-center width-25">
                         <div class="icon bg-fifth mr-2 d-flex justify-content-center align-items-center"><span class="icon-map"></span></div>
-                        <span class="text">Cuenca, Ecuador</span>
+                        <span class="text">{{ center_data.direction.main_street }}</span>
                     </div>
-                    {% if request.session.user_email %}
-                        <div class="col-md pr-4 d-flex topper align-items-center">
-                            <div class="icon bg-secondary mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
-                            <span class="text"><a class="text" class="nav-link">{{ request.session.user_email }}</a></span>
-                        </div>
-                        <div class="col-md pr-4 d-flex topper align-items-center">
-                            <div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
-                            <span class="text"><a class="text" href="/logout/" class="nav-link">Cerrar Sesión</a></span>
-                        </div>
-                    {% else %}
-                        <div class="col-md pr-4 d-flex topper align-items-center">
-                            <div class="icon bg-secondary mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
-                            <span class="text"><a class="text" href="registro.html" class="nav-link">¡Registrate!</a></span>
-                        </div>
-                        <div class="col-md pr-4 d-flex topper align-items-center">
-                            <div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
-                            <span class="text"><a class="text" href="login.html" class="nav-link">Iniciar Sesión</a></span>
-                        </div>
-                    {% endif %}                    
+                    <div class="col-md pr-4 d-flex topper align-items-center width-50">
+                        <div class="icon bg-secondary mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
+                        <span class="text"><a class="text" class="nav-link">{{ center_data.name }}</a></span>
+                    </div>
+                    <div class="col-md pr-4 d-flex topper align-items-center width-25">
+                        <div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-mail_outline"></span></div>
+                        <span class="text"><a class="text" class="nav-link">{{ center_data.email }}</a></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .width-25 {
+        max-width: 25%;
+    }
+</style>

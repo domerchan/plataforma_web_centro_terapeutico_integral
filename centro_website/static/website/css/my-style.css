@@ -1,0 +1,69 @@
+.forum-section {
+    margin-top: 40px;
+    margin-bottom: 120px;
+}
+
+.forum-entry {
+    margin-bottom: 25px;
+    box-shadow: 0px 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.forum-response {
+    margin-left: 25px;
+    margin-bottom: 15px;
+    box-shadow: 0px 10px 14px rgba(0, 0, 0, 0.15);
+}
+
+.forum-header.entry {
+    padding: 10px 15px 5px 15px;
+    color: #fff;
+}
+
+.forum-header.response {
+    padding: 10px 15px 5px 15px;
+    background-color: rgb(255, 246, 197);
+}
+
+.forum-header.entry h4 {
+    color: #fff;
+    font-weight: bold;
+}
+
+.forum-description {
+    padding: 10px 15px 5px 15px;
+}
+
+.forum-header .user-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 15px 5px 0px 15px;
+    float: left;
+}
+
+.last-entries .heading {
+    margin-bottom: 0px !important;
+}
+
+.col-lg-8.ftco-animate.coments {
+    margin-top: 60px !important;
+}
+
+.forum-entry-table {
+    width: 100%;
+}
+
+.forum-entry-table td,
+.forum-entry-table th {
+    padding: 5px 20px;
+}
+
+.forum-entry-table tr {
+    border-bottom: solid 1px rgb(191, 210, 221);
+}
+
+.forum-entry-table th {
+    background-image: linear-gradient(#fff, rgb(241, 248, 250), rgb(191, 210, 221));
+    border: solid 1px rgb(191, 210, 221);
+    padding: 10px 20px;
+}

@@ -6,9 +6,14 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.utils.deprecation import MiddlewareMixin
+
+from django.db.models import Count
+
 from website.models import User
 from website.models import Direction
 from website.models import Therapeutic_center
+from website.models import Forum_entry
+from website.models import Forum_response
 from website.forms import UserForm
 
 
@@ -19,7 +24,8 @@ def about(request):
     return render(request, 'about.html', {'center_data':center_data})
 
 def blog(request):
-    return render(request, 'blog.html', {'center_data':center_data})
+    entries = Forum_entry.objects.all().annotate(responses=Count('forum_response'))
+    return render(request, 'blog.html', {'center_data':center_data, 'entries':entries})
 
 def blogsingle(request):
     return render(request, 'blog-single.html', {'center_data':center_data})
@@ -130,4 +136,9 @@ def logout(request):
         response = redirect('index')
         return response
 
-    
+def showForum(request, id):
+    forum_responses = Forum_response.objects.filter(entry=id)
+    entry = Forum_entry.objects.filter(id=id).first()
+    entries = Forum_entry.objects.reverse()[:5].annotate(responses=Count('forum_response'))
+    count_responses = Forum_response.objects.filter(entry=id).count()
+    return render(request, 'blog-single.html', {'center_data':center_data, 'entry':entry, 'responses':forum_responses, 'entries':entries, 'count_responses':count_responses})

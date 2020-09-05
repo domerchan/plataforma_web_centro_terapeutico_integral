@@ -33,6 +33,9 @@ class User(models.Model):
     degree = models.CharField(max_length=500, null=True)
     biography = models.TextField(null=True)
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
 class Patient(models.Model):
     MALE = 'M'
     FEMALE = 'F'
@@ -76,6 +79,9 @@ class Patient(models.Model):
     montepio = models.BooleanField()
     representatives = models.ManyToManyField(User, through='Relationship')
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
 class Relationship(models.Model):
     representative = models.ForeignKey(User, on_delete=models.CASCADE)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -87,38 +93,33 @@ class Direction(models.Model):
     house_number = models.CharField(max_length=5, null=True)
     reference = models.TextField()
 
-class Disability_card(models.Model):
-    HEARING = 'HE'
-    PHYSICAL = 'PH'
-    INTELLECTUAL = 'IN'
-    LANGUAGE = 'LA'
-    PSYCOSOCIAL = 'PS'
-    VISUAL = 'VI'
-    DISABILITY_OPTIONS = [
-        (HEARING, 'Discapacidad Auditiva'),
-        (PHYSICAL, 'Discapacidad Física'),
-        (INTELLECTUAL, 'Discapacidad Intelectual'),
-        (LANGUAGE, 'Discapacidad del Lenguaje'),
-        (PSYCOSOCIAL, 'Discapacidad Psicosocial'),
-        (VISUAL, 'Discapacidad Visual'),
-    ]
+class Disability(models.Model):
+    disability_type = models.CharField(max_length=30)
+    disability_description = models.TextField()
 
+    def __str__(self):
+        return self.disability_type
+
+class Disability_card(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    disability_type = models.CharField(max_length=2, choices=DISABILITY_OPTIONS)
+    disability_type = models.ForeignKey(Disability, on_delete=models.CASCADE)
     disability_description = models.TextField()
     disability_percentage = models.PositiveSmallIntegerField()
 
 class Forum_entry(models.Model):
     representative = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     subject = models.CharField(max_length=200)
-    description = models.CharField(max_length=500)
+    description = models.TextField(max_length=5000)
     date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.subject + ' - fecha: ' + str(self.date)
 
 class Forum_response(models.Model):
     entry = models.ForeignKey(Forum_entry, on_delete=models.CASCADE, null=True)
     #response = models.ForeignKey(Forum_response, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    response = models.CharField(max_length=500)
+    response = models.TextField(max_length=5000)
     date = models.DateTimeField(auto_now_add=True)
     like = models.PositiveIntegerField(default=0)
     dislike = models.IntegerField(default=0)

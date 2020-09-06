@@ -24,4 +24,5 @@ urlpatterns = [
     path('iniciarSesion/', views.iniciarSesion),
     path('logout/', views.logout),
     path('blog-single.html/<int:id>', views.showForum),
+    path('comment/<str:email>/<int:entry>', views.comment),
 ]

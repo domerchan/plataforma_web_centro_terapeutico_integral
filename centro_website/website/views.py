@@ -98,6 +98,19 @@ def registrar(request):
     else:
         return render(request, "index.html")
 
+def comment(request, email, entry):
+    en = Forum_entry.objects.filter(id=entry).first()
+    user = User.objects.filter(email=email).first()
+    if request.method=="POST":
+        rp = request.POST["response"]
+        
+        res = Forum_response(entry=en, user=user, response=rp)
+        res.save()
+
+        return redirect('/blog-single.html/'+str(entry))
+    else:
+        return render(request, "index.html")
+
 def iniciarSesion(request):
     if request.method=="POST":
         email = request.POST["email"]

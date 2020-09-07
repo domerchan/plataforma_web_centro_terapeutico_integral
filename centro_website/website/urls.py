@@ -23,6 +23,9 @@ urlpatterns = [
     path('registrar/', views.registrar),
     path('iniciarSesion/', views.iniciarSesion),
     path('logout/', views.logout),
+    path('enviarCorreo/', views.enviarCorreo),
     path('blog-single.html/<int:id>', views.showForum),
     path('comment/<str:email>/<int:entry>', views.comment),
+    path('delete-comment/<int:entry>/<int:id>', views.deleteComment),
+    path('new-entry/<str:email>', views.newEntry),
 ]

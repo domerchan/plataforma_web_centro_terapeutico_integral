@@ -67,3 +67,7 @@
     border: solid 1px rgb(191, 210, 221);
     padding: 10px 20px;
 }
+
+.forum-response-delete {
+    float: right;
+}

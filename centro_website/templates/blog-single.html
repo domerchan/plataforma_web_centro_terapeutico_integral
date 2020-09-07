@@ -37,7 +37,8 @@
                         <div class="forum-header response">
                             <div class="user-img mr-4" style="background-image: url(../static/website/images/teacher-1.jpg)"></div>
                             <div class="content">
-                                Respuesta por: <strong>{{ response.user}} </strong>, {{ response.date }}
+                                Respuesta por: <strong>{{ response.user}} </strong>, {{ response.date }} {% if request.session.user_email == response.user.email%}
+                                <a href="/delete-comment/{{entry.id}}/{{response.id}}" class="forum-response-delete" onclick="this.parentElement.style.display='none';">eliminar [&times;]</a> {% endif %}
                                 <p>likes: {{response.like }} dislikes: {{ response.dislike }}</p>
                             </div>
                         </div>

@@ -14,7 +14,7 @@
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center">
                 <div class="col-md-9 ftco-animate text-center">
-                    <h1 class="mb-2 bread">Contact Us</h1>
+                    <h1 class="mb-2 bread">Contáctanos</h1>
                     <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
                 </div>
             </div>
@@ -26,51 +26,76 @@
             <div class="row d-flex mb-5 contact-info">
                 <div class="col-md-3 d-flex">
                     <div class="bg-light align-self-stretch box p-4 text-center">
-                        <h3 class="mb-4">Address</h3>
+                        <h3 class="mb-4">Dirección</h3>
                         <p>198 West 21th Street, Suite 721 New York NY 10016</p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="bg-light align-self-stretch box p-4 text-center">
-                        <h3 class="mb-4">Contact Number</h3>
+                        <h3 class="mb-4">Número de Contácto</h3>
                         <p><a href="tel://1234567920">+ 1235 2355 98</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="bg-light align-self-stretch box p-4 text-center">
-                        <h3 class="mb-4">Email Address</h3>
+                        <h3 class="mb-4">Correo Electrónico</h3>
                         <p><a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="bg-light align-self-stretch box p-4 text-center">
-                        <h3 class="mb-4">Website</h3>
-                        <p><a href="#">yoursite.com</a></p>
+                        <h3 class="mb-4">Facebook</h3>
+                        <p><a href="facebook.com">facebook.com</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    {% if request.session.user_email %}
+        <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+            <div class="container">
+                <div class="row d-flex align-items-stretch no-gutters">
+                    <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
+                        <form action="/enviarCorreo/" method="POST">{% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" name="asunto" id="asunto" class="form-control" placeholder="Asunto">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="mensaje" id="mensaje" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Enviar Correo" class="btn btn-primary py-3 px-5">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-stretch">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% else %}
     <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
         <div class="container">
             <div class="row d-flex align-items-stretch no-gutters">
                 <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
-                    <form action="#">
+                    <a href="login.html">Puedes iniciar sesión para facilitar el contacto</a>
+                    <form action="/enviarCorreo/" method="POST">{% csrf_token %}
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Name">
+                            <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email">
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Correo Electrónico">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Subject">
+                            <input type="text" name="asunto" id="asunto" class="form-control" placeholder="Asunto">
                         </div>
                         <div class="form-group">
-                            <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                            <textarea name="mensaje" id="mensaje" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+                            <input type="submit" value="Enviar Correo" class="btn btn-primary py-3 px-5">
                         </div>
                     </form>
                 </div>
@@ -80,6 +105,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
 

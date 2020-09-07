@@ -23,6 +23,7 @@ urlpatterns = [
     path('registrar/', views.registrar),
     path('iniciarSesion/', views.iniciarSesion),
     path('logout/', views.logout),
+    path('enviarCorreo/', views.enviarCorreo),
     path('blog-single.html/<int:id>', views.showForum),
     path('comment/<str:email>/<int:entry>', views.comment),
 ]

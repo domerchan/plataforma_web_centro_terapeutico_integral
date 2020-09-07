@@ -165,7 +165,8 @@ def enviarCorreo(request):
             recipient_list=['alejo.sebas99@outlook.com']
 
             send_mail(subject, message, email_from, recipient_list)
-            return HttpResponse("Correcto")
+            response = redirect('index')
+            return response
     
     return HttpResponse("Incorrecto")
 

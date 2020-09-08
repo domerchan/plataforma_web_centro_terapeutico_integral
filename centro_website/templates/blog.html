@@ -22,13 +22,13 @@
         </div>
     </section>
 
-    <section class="forum-section">
-        <div class="container">
+    <section class="forum-section bg-light">
+        <div class="container ftco-animate">
             <table class="forum-entry-table">
                 <tr>
-                    <th>Temas</th>
-                    <th>Autor</th>
-                    <th>Comentarios</th>
+                    <th class="bg-primary">Temas</th>
+                    <th class="bg-primary">Autor</th>
+                    <th class="bg-primary">Comentarios</th>
                 </tr>
                 {%for entry in entries%}
                 <tr>
@@ -42,10 +42,28 @@
                 {%endfor%}
             </table>
         </div>
+
+        {% if request.session.user_email and request.session.user_rol == 'RP' %}
+        <div class="container">
+            <div class="col-lg-8 ftco-animate coments">
+                <h4><strong>Crear una nueva entrada:</strong></h4>
+                <form action="/new-entry/{{request.session.user_email}}" method="POST" class="p-5 bg-light">{% csrf_token %}
+                    <div class="form-group">
+                        <input name="subject" type="text" class="form-control" placeholder="Asunto">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensaje*: </label>
+                        <textarea name="description" id="message" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Subir Comentario" class="btn py-3 px-4 btn-primary">
+                    </div>
+
+                </form>
+            </div>
+        </div>
     </section>
-
-
-    {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
+    {% endif %} {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
 
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>

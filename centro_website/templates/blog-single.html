@@ -11,9 +11,9 @@
 
     <section class="forum-section">
         <div class="container">
+
+            <p class="breadcrumbs"><span class="mr-2"><a href="/blog.html">Foro <i class="ion-ios-arrow-forward"></i></a></span> <span>{{ entry.subject }} <i class="ion-ios-arrow-forward"></i></span></p>
             <div class="row">
-
-
                 <div class="col-lg-8 ftco-animate">
 
                     <div class="forum-entry">
@@ -37,7 +37,8 @@
                         <div class="forum-header response">
                             <div class="user-img mr-4" style="background-image: url(../static/website/images/teacher-1.jpg)"></div>
                             <div class="content">
-                                Respuesta por: <strong>{{ response.user}} </strong>, {{ response.date }}
+                                Respuesta por: <strong>{{ response.user}} </strong>, {{ response.date }} {% if request.session.user_email == response.user.email%}
+                                <a href="/delete-comment/{{entry.id}}/{{response.id}}" class="forum-response-delete" onclick="this.parentElement.style.display='none';">eliminar [&times;]</a> {% endif %}
                                 <p>likes: {{response.like }} dislikes: {{ response.dislike }}</p>
                             </div>
                         </div>

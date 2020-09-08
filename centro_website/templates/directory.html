@@ -10,25 +10,30 @@
     {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
 
     <!--Incluir contenido-->
-
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <h1>PÁGINA EN CONSTRUCCIÓN</h1>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-
-
+     <br>
+    <section>
+        <div class="text-center">
+            <h1 style="background-color:powderblue">Directorio General</h1>
+        </div>
+        <div>
+            {% if directorios %}
+            {% for lugar in directorios %}
+            <div class="panel-column panel-bottom-1 panel-column-first grid grid-15">
+                    <div class="bg-light align-self-stretch box p-4 text-center">
+                        <h3 class="mb-4">{{ lugar.name }}</h3>
+                        <p>{{ lugar.direction.main_street }}</p>
+                        <p>{{ lugar.direction.secondary_street }}</p>
+                        <p>{{ lugar.direction.house_number }}</p>
+                        <p>{{ lugar.description }}</p>
+                    </div>
+                    <hr style="width:75%;">
+          </div>
+             {% endfor %}
+            {% else %}
+            <h1>No hay registros</h1>
+            {% endif %}
+        </div>
+    </section>
     <!---->
 
     {% include 'includes/footer.html'%} {% block footer %} {% endblock %}

@@ -9,13 +9,13 @@
 <body>
     {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
 
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/website/images/bg_2.jpg');">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center">
                 <div class="col-md-9 ftco-animate text-center">
                     <h1 class="mb-2 bread">Contáctanos</h1>
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Inicio <i class="ion-ios-arrow-forward"></i></a></span> <span>Contacto <i class="ion-ios-arrow-forward"></i></span></p>
                 </div>
             </div>
         </div>
@@ -82,7 +82,8 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
     {% else %}
     <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
         <div class="container">
@@ -121,9 +122,7 @@
             </div>
         </div>
     </section>
-    {% endif %}
-
-    {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
+    {% endif %} {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
 
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>

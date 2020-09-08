@@ -10,6 +10,11 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.utils.deprecation import MiddlewareMixin
 from PIL import Image
+from website.models import User
+from website.models import Direction
+from website.models import Directory
+
+from website.forms import UserForm
 
 from django.db.models import Count
 
@@ -83,6 +88,9 @@ def training(request):
 
 def tutorial(request):
     return render(request, 'tutorial.html', {'center_data':center_data})
+
+def disabilities(request):
+    return render(request, 'disabilities.html', {'center_data':center_data})
 
 def registrar(request):
     if request.method=="POST":
@@ -225,6 +233,19 @@ def enviarCorreo(request):
     
     return HttpResponse("Incorrecto")
 
+def newEntry(request, email):
+    user = User.objects.filter(email=email).first()
+    if request.method=="POST":
+        subject = request.POST["subject"]
+        description = request.POST["description"]
+        
+        entry = Forum_entry(representative=user, subject=subject, description=description)
+        entry.save()
+
+        return redirect('/blog-single.html/'+str(entry.id))
+    else:
+        return render(request, "index.html")
+
 def comment(request, email, entry):
     en = Forum_entry.objects.filter(id=entry).first()
     user = User.objects.filter(email=email).first()
@@ -238,9 +259,24 @@ def comment(request, email, entry):
     else:
         return render(request, "index.html")
 
+def deleteComment(request, entry, id):
+    response = Forum_response.objects.get(id=id)
+    response.delete()
+    return redirect('/blog-single.html/'+str(entry))
+
 def showForum(request, id):
     forum_responses = Forum_response.objects.filter(entry=id)
     entry = Forum_entry.objects.filter(id=id).first()
     entries = Forum_entry.objects.reverse()[:5].annotate(responses=Count('forum_response'))
     count_responses = Forum_response.objects.filter(entry=id).count()
     return render(request, 'blog-single.html', {'center_data':center_data, 'entry':entry, 'responses':forum_responses, 'entries':entries, 'count_responses':count_responses})
+
+def direction_list(request):
+    direccion = Direction.objects.all()
+    contexto = {'direcciones': direccion}
+    return render(request, 'directory.html', contexto)
+
+def directory_list(request):
+    lugar = Directory.objects.all()
+    contexto = {'directorios': lugar}
+    return render(request, 'directory.html', contexto)

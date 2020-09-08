@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Patient, Relationship, Direction, Disability_card, Disability, Forum_entry, Forum_response, Therapy_live, Therapy_local, Tip, Therapeutic_center, Directory
+from .models import User, Patient, Relationship, Direction, Disability, Disability_card, Disability, Forum_entry, Forum_response, Therapy_live, Therapy_local, Tip, Therapeutic_center, Directory
 
 admin.site.register(User)
 admin.site.register(Patient)

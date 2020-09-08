@@ -77,6 +77,7 @@ class Patient(models.Model):
     alimony = models.BooleanField()
     jubilee_pension = models.BooleanField()
     montepio = models.BooleanField()
+    image = models.FileField(upload_to='images/', null=True, verbose_name="")
     representatives = models.ManyToManyField(User, through='Relationship')
 
     def __str__(self):

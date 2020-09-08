@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.utils.deprecation import MiddlewareMixin
+from PIL import Image
 from website.models import User
 from website.models import Direction
 from website.models import Directory
@@ -17,6 +18,10 @@ from website.forms import UserForm
 
 from django.db.models import Count
 
+from website.models import User
+from website.models import Direction
+from website.models import Patient
+from website.models import Relationship
 from website.models import Therapeutic_center
 from website.models import Forum_entry
 from website.models import Forum_response
@@ -54,8 +59,20 @@ def information(request):
 def login(request):
     return render(request, 'login.html', {'center_data':center_data})
 
+def pacientes(request):
+    pacientes = []
+    relaciones = Relationship.objects.all()
+    for rel in relaciones:
+        if rel.representative == User.objects.get(email=request.session['user_email']):
+            pacientes.append(rel.patient)
+
+    return render(request, 'pacientes.html', {'center_data':center_data, 'pacientes':pacientes})
+
 def registro(request):
     return render(request, 'registro.html', {'center_data':center_data})
+
+def registroPaciente(request):
+    return render(request, 'registro-paciente.html', {'center_data':center_data})
 
 def report(request):
     return render(request, 'report.html', {'center_data':center_data})
@@ -120,6 +137,44 @@ def registrar(request):
     else:
         return render(request, "index.html")
 
+def registrarPaciente(request):
+    if request.method=="POST":
+        nombres = request.POST["names"]
+        apellidos = request.POST["lnames"]
+        cedula = request.POST["id"]
+        birth = request.POST["birth"]
+        sex = request.POST["sex"]
+        pais = request.POST["pais"]
+        provincia = request.POST["provincia"]
+        canton = request.POST["canton"]
+        edu1 = request.POST["edu1"]
+        edu2 = request.POST["edu2"]
+        parroquia = request.POST["parroquia"]
+
+        check1 = request.POST["check1"]
+        check2 = request.POST["check2"]
+        check3 = request.POST["check3"]
+        check4 = request.POST["check4"]
+        check5 = request.POST["check5"]
+
+        image = request.POST["image"]
+
+        relacion = request.POST["relacion"]
+
+        usuario = User.objects.get(email=request.session['user_email'])
+
+        paciente = Patient(first_name=nombres, last_name=apellidos, identity_card=cedula, birth=birth, sex=sex, country_origin=pais, province=provincia, canton=canton, educational_institution_type=edu1, educational_institution=edu2, parish_type=parroquia, bond_desarrollo_humano=check1, bond_joaquin_gallegos=check2, alimony=check3, jubilee_pension=check4, montepio=check5, image=image)
+        paciente.save()
+
+        relacion = Relationship(representative=usuario, patient=paciente, relationship=relacion)
+        relacion.save()
+
+        #pacientes = Patient.objects.all()
+
+        response = redirect('pacientes')
+        return response
+
+
 def iniciarSesion(request):
     if request.method=="POST":
         email = request.POST["email"]
@@ -154,6 +209,7 @@ def iniciarSesion(request):
 def logout(request):
     if 'user_email' in request.session:
         del request.session['user_email']
+        del request.session['user_rol']
         response = redirect('login')
         return response
     else:
@@ -170,7 +226,9 @@ def enviarCorreo(request):
             recipient_list=['alejo.sebas99@outlook.com']
 
             send_mail(subject, message, email_from, recipient_list)
-            response = redirect('index')
+
+            messages.success(request, 'Porfavor espera la respuesta en tu correo electrónico')
+            response = redirect('contact')
             return response
     
     return HttpResponse("Incorrecto")

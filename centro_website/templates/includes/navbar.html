@@ -35,6 +35,7 @@
                 {% if request.session.user_email %}
                 <li class="nav-item"><a href="#" class="nav-link">{{ request.session.user_email }}</a>
                     <ul class="sub-menu">
+                        <li class="nav-item"><a href="/pacientes.html" class="nav-link">Mis representados</a></li>
                         <li class="nav-item"><a href="/therapies.html" class="nav-link">Perfil</a></li>
                         <li class="nav-item"><a href="/tips.html" class="nav-link">Próximas Terapias</a></li>
                         <li class="nav-item"><a href="/logout/" class="nav-link">Cerrar Sesión</a></li>

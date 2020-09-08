@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Registro</title>
+    {% include 'includes/head.html'%} {% block head %} {% endblock %}
+</head>
+
+<body>
+    {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
+
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-2 bread">Registrate en nuestro sistema</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Registro <i class="ion-ios-arrow-forward"></i></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+        <div class="container">
+            <div class="row d-flex align-items-stretch no-gutters">
+                <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
+                    <form action="/registrarPaciente/" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <h4>Datos Principales</h4>
+                            <input type="text" id="names" name="names" class="form-control" placeholder="Nombres" required>
+                            <input type="text" id="lnames" name="lnames" class="form-control" placeholder="Apellidos" required>
+                            <input type="text" id="id" name="id" class="form-control" placeholder="Cédula" required><br>
+                            <div class="form-group">
+                                <label for="image">Imagen del paciente:</label>
+                                <input type="file" id="image" name="image" accept="image/*">
+                            </div><br>
+                            <div class="form-group">
+                                <label>Fecha de Nacimiento:</label>
+                                <input type="date" id="birth" name="birth" required>
+                            </div>
+                            <label>Sexo</label>
+                            <select name="sex" id="sex" required>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select><br><br>
+
+                            <label>Relación</label>
+                            <select name="relacion" id="relacion" required>
+                                <option value="Padre/Madre">Padre o Madre</option>
+                                <option value="Hijo/Hija">Hijo o Hija</option>
+                                <option value="Hermano/Hermana">Hermano o Hermana</option>
+                                <option value="Familia no directa">Familia no directa</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <h4>Información Regional</h4>
+                            <input type="text" id="pais" name="pais" class="form-control" placeholder="País de Origen" required>
+                            <input type="text" id="provincia" name="provincia" class="form-control" placeholder="Provincia" required>
+                            <input type="text" id="canton" name="canton" class="form-control" placeholder="Cantón" required>
+                            
+                            <div class="form-group">
+                                <label>Tipo de Parroquia</label>
+                                <select name="parroquia" id="parroquia" required>
+                                    <option value="UB">Urbana</option>
+                                    <option value="RU">Rural</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h4>Educación</h4>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert">
+                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                        <strong>¡Error! </strong>{{ message }}.
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <label>Tipo de Educación</label>
+                            <select name="edu1" id="edu1" required>
+                                <option value="IN">Inclusiva</option>
+                                <option value="SP">Especializada</option>
+                                <option value="RE">Regular</option>
+                            </select>
+                            <input type="text" id="edu2" name="edu2" class="form-control" placeholder="Institución Educativa" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <h4>Información Técnica</h4>
+                            <p>Indique las que posea:</p>
+                            <input type="hidden" id="check1hidden" name="check1" value="False">
+                            <input type="checkbox" id="check1" name="check1" value=True>
+                            <label for="check1"> Bono de Desarrollo Humano</label><br>
+
+                            <input type="hidden" id="check2hidden" name="check2" value="False">
+                            <input type="checkbox" id="check2" name="check2" value=True>
+                            <label for="check2"> Bono Joaquin Gallegos Lara </label><br>
+
+                            <input type="hidden" id="check3hidden" name="check3" value="False">
+                            <input type="checkbox" id="check3" name="check3" value=True>
+                            <label for="check3"> Pensión Alimenticia </label><br>
+
+                            <input type="hidden" id="check4hidden" name="check4" value="False">
+                            <input type="checkbox" id="check4" name="check4" value=True>
+                            <label for="check4"> Pensión Jubilar </label><br>
+                            
+                            <input type="hidden" id="check5hidden" name="check5" value="False">
+                            <input type="checkbox" id="check5" name="check5" value=True>
+                            <label for="check5"> Montepio </label><br><br>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Solicitar" name="save" class="btn btn-primary py-3 px-5">
+                        </div>
+                    </form>
+                </div>
+                <!--<div class="col-md-6 d-flex align-items-stretch">
+                    <div id="map"></div>
+                </div>-->
+            </div>
+        </div>
+    </section>
+
+    {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+    {% include 'includes/js.html'%} {% block js %} {% endblock %}
+
+</body>
+
+</html>

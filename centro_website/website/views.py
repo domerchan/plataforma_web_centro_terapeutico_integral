@@ -10,8 +10,6 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.utils.deprecation import MiddlewareMixin
 from PIL import Image
-from website.models import User
-from website.models import Direction
 from website.models import Directory
 
 from website.forms import UserForm
@@ -23,6 +21,7 @@ from website.models import Direction
 from website.models import Patient
 from website.models import Relationship
 from website.models import Therapeutic_center
+from website.models import Disability_card
 from website.models import Forum_entry
 from website.models import Forum_response
 from website.forms import UserForm
@@ -61,12 +60,20 @@ def login(request):
 
 def pacientes(request):
     pacientes = []
+    aprobados = []
     relaciones = Relationship.objects.all()
+    discapacidades = Disability_card.objects.all()
+
     for rel in relaciones:
         if rel.representative == User.objects.get(email=request.session['user_email']):
             pacientes.append(rel.patient)
 
-    return render(request, 'pacientes.html', {'center_data':center_data, 'pacientes':pacientes})
+    for dis in discapacidades:
+        if dis.patient in pacientes:
+            aprobados.append(dis.patient)
+            pacientes.remove(dis.patient)
+
+    return render(request, 'pacientes.html', {'center_data':center_data, 'pacientes':pacientes, 'aprobados':aprobados})
 
 def registro(request):
     return render(request, 'registro.html', {'center_data':center_data})

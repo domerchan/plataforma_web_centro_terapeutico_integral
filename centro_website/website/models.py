@@ -125,7 +125,7 @@ class Forum_response(models.Model):
     dislike = models.IntegerField(default=0)
 
 class Therapy_live(models.Model):
-    therapist = models.ForeignKey(Forum_entry, on_delete=models.CASCADE, null=True)
+    therapist = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     therapy_date = models.DateField()
     registration_date = models.DateTimeField(auto_now_add=True)
     description = models.CharField(max_length=500)

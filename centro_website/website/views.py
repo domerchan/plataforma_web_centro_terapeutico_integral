@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from django.utils.deprecation import MiddlewareMixin
 from website.models import User
 from website.models import Direction
+from website.models import Directory
+
 from website.forms import UserForm
 
 from django.db.models import Count
@@ -69,6 +71,9 @@ def training(request):
 
 def tutorial(request):
     return render(request, 'tutorial.html', {'center_data':center_data})
+
+def disabilities(request):
+    return render(request, 'disabilities.html', {'center_data':center_data})
 
 def registrar(request):
     if request.method=="POST":
@@ -207,3 +212,13 @@ def showForum(request, id):
     entries = Forum_entry.objects.reverse()[:5].annotate(responses=Count('forum_response'))
     count_responses = Forum_response.objects.filter(entry=id).count()
     return render(request, 'blog-single.html', {'center_data':center_data, 'entry':entry, 'responses':forum_responses, 'entries':entries, 'count_responses':count_responses})
+
+def direction_list(request):
+    direccion = Direction.objects.all()
+    contexto = {'direcciones': direccion}
+    return render(request, 'directory.html', contexto)
+
+def directory_list(request):
+    lugar = Directory.objects.all()
+    contexto = {'directorios': lugar}
+    return render(request, 'directory.html', contexto)

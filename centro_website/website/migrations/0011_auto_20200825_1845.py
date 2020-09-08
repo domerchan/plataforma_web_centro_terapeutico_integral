@@ -97,7 +97,7 @@ class Migration(migrations.Migration):
                 ('description', models.CharField(max_length=500)),
                 ('url', models.CharField(max_length=500)),
                 ('patient', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='website.Patient')),
-                ('therapist', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='website.Forum_entry')),
+                ('therapist', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='website.User')),
             ],
         ),
         migrations.CreateModel(
@@ -108,7 +108,7 @@ class Migration(migrations.Migration):
                 ('registration_date', models.DateTimeField(auto_now_add=True)),
                 ('description', models.CharField(max_length=500)),
                 ('url', models.CharField(max_length=500)),
-                ('therapist', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='website.Forum_entry')),
+                ('therapist', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='website.User')),
             ],
         ),
         migrations.CreateModel(

@@ -8,7 +8,7 @@ urlpatterns = [
     path('blog.html', views.blog, name='blog'),
     path('blog-single.html', views.blogsingle, name='blogsingle'),
     path('contact.html', views.contact, name='contact'),
-    path('directory.html', views.directory, name='directory'),
+
     path('donations.html', views.donations, name='donations'),
     path('index.html', views.index, name='index'),
     path('information.html', views.information, name='information'),
@@ -28,4 +28,5 @@ urlpatterns = [
     path('comment/<str:email>/<int:entry>', views.comment),
     path('delete-comment/<int:entry>/<int:id>', views.deleteComment),
     path('new-entry/<str:email>', views.newEntry),
+    path('directory.html', views.directory_list),
 ]

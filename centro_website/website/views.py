@@ -72,6 +72,9 @@ def training(request):
 def tutorial(request):
     return render(request, 'tutorial.html', {'center_data':center_data})
 
+def disabilities(request):
+    return render(request, 'disabilities.html', {'center_data':center_data})
+
 def registrar(request):
     if request.method=="POST":
         nombres = request.POST["names"]

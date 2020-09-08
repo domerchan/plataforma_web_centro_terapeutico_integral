@@ -19,6 +19,7 @@ urlpatterns = [
     path('tips.html', views.tips, name='tips'),
     path('training.html', views.training, name='training'),
     path('tutorial.html', views.tutorial, name='tutorial'),
+    path('disabilities.html', views.disabilities, name='disabilities'),
 
     path('registrar/', views.registrar),
     path('iniciarSesion/', views.iniciarSesion),

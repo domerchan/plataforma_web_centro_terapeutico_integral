@@ -22,13 +22,13 @@
         </div>
     </section>
 
-    <section class="forum-section">
-        <div class="container">
+    <section class="forum-section bg-light">
+        <div class="container ftco-animate">
             <table class="forum-entry-table">
                 <tr>
-                    <th>Temas</th>
-                    <th>Autor</th>
-                    <th>Comentarios</th>
+                    <th class="bg-primary">Temas</th>
+                    <th class="bg-primary">Autor</th>
+                    <th class="bg-primary">Comentarios</th>
                 </tr>
                 {%for entry in entries%}
                 <tr>
@@ -43,7 +43,7 @@
             </table>
         </div>
 
-        {% if request.session.user_email %}
+        {% if request.session.user_email and request.session.user_rol == 'RP' %}
         <div class="container">
             <div class="col-lg-8 ftco-animate coments">
                 <h4><strong>Crear una nueva entrada:</strong></h4>

@@ -102,8 +102,22 @@ class Disability(models.Model):
         return self.disability_type
 
 class Disability_card(models.Model):
+    HEARING = 'HE'
+    PHYSICAL = 'PH'
+    INTELLECTUAL = 'IN'
+    LANGUAGE = 'LA'
+    PSYCOSOCIAL = 'PS'
+    VISUAL = 'VI'
+    DISABILITY_OPTIONS = [
+        (HEARING, 'Discapacidad Auditiva'),
+        (PHYSICAL, 'Discapacidad Física'),
+        (INTELLECTUAL, 'Discapacidad Intelectual'),
+        (LANGUAGE, 'Discapacidad del Lenguaje'),
+        (PSYCOSOCIAL, 'Discapacidad Psicosocial'),
+        (VISUAL, 'Discapacidad Visual'),
+    ]
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    disability_type = models.ForeignKey(Disability, on_delete=models.CASCADE)
+    disability_type = models.CharField(max_length=2, choices=DISABILITY_OPTIONS)
     disability_description = models.TextField()
     disability_percentage = models.PositiveSmallIntegerField()
 

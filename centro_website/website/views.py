@@ -20,6 +20,7 @@ from website.models import User
 from website.models import Direction
 from website.models import Patient
 from website.models import Relationship
+from website.models import Therapy_local
 from website.models import Therapeutic_center
 from website.models import Disability_card
 from website.models import Forum_entry
@@ -61,19 +62,31 @@ def login(request):
 def pacientes(request):
     pacientes = []
     aprobados = []
+    pacientesTerapeuta = []
     relaciones = Relationship.objects.all()
-    discapacidades = Disability_card.objects.all()
+    terapias = Therapy_local.objects.all()
 
     for rel in relaciones:
-        if rel.representative == User.objects.get(email=request.session['user_email']):
-            pacientes.append(rel.patient)
+        try:
+            if rel.representative == User.objects.get(email=request.session['user_email']):
+                pacientes.append(rel.patient)
+    
+        except:
+            response = redirect('login')
+            return response
 
-    for dis in discapacidades:
-        if dis.patient in pacientes:
-            aprobados.append(dis.patient)
-            pacientes.remove(dis.patient)
+    for ter in terapias:
+        try:
+            if ter.patient in pacientes:
+                aprobados.append(ter.patient)
+                pacientes.remove(ter.patient)
+            if ter.therapist == User.objects.get(email=request.session['user_email']):
+                pacientesTerapeuta.append(ter.patient)
+        except:
+            response = redirect('login')
+            return response
 
-    return render(request, 'pacientes.html', {'center_data':center_data, 'pacientes':pacientes, 'aprobados':aprobados})
+    return render(request, 'pacientes.html', {'center_data':center_data, 'pacientes':pacientes, 'aprobados':aprobados, 'terapias':terapias, 'pacientesTerapeuta':pacientesTerapeuta})
 
 def registro(request):
     return render(request, 'registro.html', {'center_data':center_data})
@@ -168,6 +181,10 @@ def registrarPaciente(request):
 
         relacion = request.POST["relacion"]
 
+        tipoDiscapacidad = request.POST["discapacidad"]
+        descripcionDiscapacidad = request.POST["descripcion"]
+        porcentajeDiscapacidad = request.POST["porcentaje"]
+
         usuario = User.objects.get(email=request.session['user_email'])
 
         paciente = Patient(first_name=nombres, last_name=apellidos, identity_card=cedula, birth=birth, sex=sex, country_origin=pais, province=provincia, canton=canton, educational_institution_type=edu1, educational_institution=edu2, parish_type=parroquia, bond_desarrollo_humano=check1, bond_joaquin_gallegos=check2, alimony=check3, jubilee_pension=check4, montepio=check5, image=image)
@@ -175,6 +192,9 @@ def registrarPaciente(request):
 
         relacion = Relationship(representative=usuario, patient=paciente, relationship=relacion)
         relacion.save()
+
+        discapacidad = Disability_card(patient=paciente, disability_type=tipoDiscapacidad, disability_description=descripcionDiscapacidad, disability_percentage=porcentajeDiscapacidad)
+        discapacidad.save()
 
         #pacientes = Patient.objects.all()
 

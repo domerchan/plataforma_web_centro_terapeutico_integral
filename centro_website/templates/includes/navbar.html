@@ -45,10 +45,20 @@
                 {% else %}
                 <li class="nav-item"><a href="#" class="nav-link">{{ request.session.user_email }}</a>
                     <ul class="sub-menu">
+<<<<<<< HEAD
                         <li class="nav-item"><a href="#" class="nav-link">Perfil</a></li>
                         <li class="nav-item"><a href="/pacientes.html" class="nav-link">Mis Pacientes</a></li>
                         <li class="nav-item"><a href="/report.html" class="nav-link">Reportes</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Próximas Terapias</a></li>
+=======
+                        {% if request.session.user_rol == "RP" %}
+                            <li class="nav-item"><a href="/pacientes.html" class="nav-link">Mis representados</a></li>
+                        {% else %}
+                            <li class="nav-item"><a href="/pacientes.html" class="nav-link">Mis pacientes</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a href="/therapies.html" class="nav-link">Perfil</a></li>
+                        <li class="nav-item"><a href="/tips.html" class="nav-link">Próximas Terapias</a></li>
+>>>>>>> 276f1d0310100fa361de3456508f8d9c7e04bba6
                         <li class="nav-item"><a href="/logout/" class="nav-link">Cerrar Sesión</a></li>
                     </ul>
                 </li>

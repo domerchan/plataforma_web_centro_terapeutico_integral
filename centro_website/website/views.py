@@ -23,6 +23,7 @@ from website.models import Relationship
 from website.models import Therapy_local
 from website.models import Therapeutic_center
 from website.models import Disability_card
+from website.models import Disability
 from website.models import Forum_entry
 from website.models import Forum_response
 from website.forms import UserForm
@@ -110,7 +111,8 @@ def tutorial(request):
     return render(request, 'tutorial.html', {'center_data':center_data})
 
 def disabilities(request):
-    return render(request, 'disabilities.html', {'center_data':center_data})
+    disabilities = Disability.objects.all()
+    return render(request, 'disabilities.html', {'center_data':center_data, 'disabilities':disabilities})
 
 def registrar(request):
     if request.method=="POST":

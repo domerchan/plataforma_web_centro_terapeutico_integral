@@ -9,32 +9,40 @@
 <body>
     {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
 
-    <!--Incluir contenido-->
-     <br>
-    <section>
-        <div class="text-center">
-            <h1 style="background-color:powderblue">Directorio General</h1>
-        </div>
-        <div>
-            {% if directorios %}
-            {% for lugar in directorios %}
-            <div class="panel-column panel-bottom-1 panel-column-first grid grid-15">
-                    <div class="bg-light align-self-stretch box p-4 text-center">
-                        <h3 class="mb-4">{{ lugar.name }}</h3>
-                        <p>{{ lugar.direction.main_street }}</p>
-                        <p>{{ lugar.direction.secondary_street }}</p>
-                        <p>{{ lugar.direction.house_number }}</p>
-                        <p>{{ lugar.description }}</p>
-                    </div>
-                    <hr style="width:75%;">
-          </div>
-             {% endfor %}
-            {% else %}
-            <h1>No hay registros</h1>
-            {% endif %}
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/website/images/bg_3.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-2 bread">Directorio de Centros Especializados en discapacidades - Cuenca</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Inicio <i class="ion-ios-arrow-forward"></i></a></span> <span>Directorio <i class="ion-ios-arrow-forward"></i></span></p>
+                </div>
+            </div>
         </div>
     </section>
-    <!---->
+
+    <section class="ftco-section ftco-no-pt ftc-no-pb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 wrap-about py-5 pr-md-4 ftco-animate">
+                    {% if directorios %} {% for lugar in directorios %}
+                    <div class="panel-column panel-bottom-1 panel-column-first grid grid-15">
+                        <div class="bg-light align-self-stretch box p-4">
+                            <h3 class="mb-4">{{ lugar.name }}</h3>
+                            <p>{{ lugar.direction.main_street }}</p>
+                            <p>{{ lugar.direction.secondary_street }}</p>
+                            <p>{{ lugar.direction.house_number }}</p>
+                            <p>{{ lugar.description }}</p>
+                        </div>
+                        <hr style="width:85%;">
+                    </div>
+                    {% endfor %} {% else %}
+                    <span>No hay registros</span> {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
     <!-- loader -->

@@ -94,6 +94,9 @@ class Direction(models.Model):
     house_number = models.CharField(max_length=5, null=True)
     reference = models.TextField()
 
+    def __str__(self):
+        return self.main_street
+
 class Disability(models.Model):
     disability_type = models.CharField(max_length=30)
     disability_description = models.TextField()

@@ -62,19 +62,31 @@ def login(request):
 def pacientes(request):
     pacientes = []
     aprobados = []
+    pacientesTerapeuta = []
     relaciones = Relationship.objects.all()
-    discapacidades = Therapy_local.objects.all()
+    terapias = Therapy_local.objects.all()
 
     for rel in relaciones:
-        if rel.representative == User.objects.get(email=request.session['user_email']):
-            pacientes.append(rel.patient)
+        try:
+            if rel.representative == User.objects.get(email=request.session['user_email']):
+                pacientes.append(rel.patient)
+    
+        except:
+            response = redirect('login')
+            return response
 
-    for dis in discapacidades:
-        if dis.patient in pacientes:
-            aprobados.append(dis.patient)
-            pacientes.remove(dis.patient)
+    for ter in terapias:
+        try:
+            if ter.patient in pacientes:
+                aprobados.append(ter.patient)
+                pacientes.remove(ter.patient)
+            if ter.therapist == User.objects.get(email=request.session['user_email']):
+                pacientesTerapeuta.append(ter.patient)
+        except:
+            response = redirect('login')
+            return response
 
-    return render(request, 'pacientes.html', {'center_data':center_data, 'pacientes':pacientes, 'aprobados':aprobados})
+    return render(request, 'pacientes.html', {'center_data':center_data, 'pacientes':pacientes, 'aprobados':aprobados, 'terapias':terapias, 'pacientesTerapeuta':pacientesTerapeuta})
 
 def registro(request):
     return render(request, 'registro.html', {'center_data':center_data})

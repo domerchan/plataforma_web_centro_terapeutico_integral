@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Kiddos - Free Bootstrap 4 Template by Colorlib</title>
+    {% include 'includes/head.html'%} {% block head %} {% endblock %}\
+</head>
+
+<body>
+    {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
+
+
+    <section class="forum-section">
+        <div class="container">
+
+            <p class="breadcrumbs"><span class="mr-2"><a href="/blog.html">Blog <i class="ion-ios-arrow-forward"></i></a></span> <span>{{ post.title }} <i class="ion-ios-arrow-forward"></i></span></p>
+            <div class="row">
+                <div class="col-lg-8 ftco-animate">
+
+                    <h1>{{ post.title }}</h1>
+                    <p>{{ post.body|safe }}</p>
+
+                </div>
+
+                <div class="col-lg-4 sidebar ftco-animate">
+                    <div class="sidebar-box ftco-animate last-entries">
+                        <h3>Últimas Entradas</h3>
+                        {%for last_post in last_posts%}
+                        <div class="block-21 mb-4 d-flex">
+                            <a class="blog-img mr-4" style="background-image: url(/static/website/images/image_1.jpg);"></a>
+                            <div class="text">
+                                <h3 class="heading"><a href="/forum-entry.html/{{entry.id}}">{{ last_post.title }}</a></h3>
+                                <div class="meta">
+                                    <div><span class="icon-calendar"></span> {{ last_post.post_date }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+    {% include 'includes/js.html'%} {% block js %} {% endblock %}
+</body>
+
+
+</html>

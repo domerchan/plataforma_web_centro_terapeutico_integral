@@ -7,8 +7,8 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('about.html', views.about, name='about'),
-    path('blog.html', views.blog, name='blog'),
-    path('blog-single.html', views.blogsingle, name='blogsingle'),
+    path('forum.html', views.forum, name='forum'),
+    path('forum-entry.html', views.forumEntry, name='forum-entry'),
     path('contact.html', views.contact, name='contact'),
 
     path('donations.html', views.donations, name='donations'),
@@ -22,23 +22,28 @@ urlpatterns = [
     path('registro-paciente.html', views.registroPaciente, name='registroPaciente'),
     path('report.html', views.report, name='report'),
     path('therapies.html', views.therapies, name='therapies'),
-    path('tips.html', views.tips, name='tips'),
+    path('blog.html', views.blog, name='blog'),
     path('training.html', views.training, name='training'),
     path('tutorial.html', views.tutorial, name='tutorial'),
     path('disabilities.html', views.disabilities, name='disabilities'),
+    path('directory.html', views.directory, name='directory'),
 
     path('registrar/', views.registrar),
     path('iniciarSesion/', views.iniciarSesion),
     path('logout/', views.logout),
     path('enviarCorreo/', views.enviarCorreo),
+<<<<<<< HEAD
     path('blog-single.html/<int:id>', views.showForum),
     path('perfil-paciente.html/<int:id>', views.perfilPaciente),
+=======
+    path('forum-entry.html/<int:id>', views.showForum),
+    path('blog-entry.html/<int:id>', views.blogEntry),
+>>>>>>> f1ab77757c86efd96906ac5999d0bc31e4ce2132
     path('comment/<str:email>/<int:entry>', views.comment),
     path('registrarPaciente/', views.registrarPaciente),
     path('editarUsuario/', views.editarUsuario),
     path('delete-comment/<int:entry>/<int:id>', views.deleteComment),
     path('new-entry/<str:email>', views.newEntry),
-    path('directory.html', views.directory_list),
 
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
 

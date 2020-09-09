@@ -7,71 +7,73 @@
 </head>
 
 <body>
-
     {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
 
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/website/images/bg_3.jpg');">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/website/images/bg_2.jpg');">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center">
                 <div class="col-md-9 ftco-animate text-center">
-                    <h1 class="mb-2 bread">Nuestro Foro</h1>
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Inicio <i class="ion-ios-arrow-forward"></i></a></span> <span>Foro <i class="ion-ios-arrow-forward"></i></span></p>
+                    <h1 class="mb-2 bread">Nuestro Blog</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Inicio <i class="ion-ios-arrow-forward"></i></a></span> <span>Blog <i class="ion-ios-arrow-forward"></i></span></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="forum-section bg-light">
-        <div class="container ftco-animate">
-            <table class="forum-entry-table">
-                <tr>
-                    <th class="bg-primary">Temas</th>
-                    <th class="bg-primary">Autor</th>
-                    <th class="bg-primary">Comentarios</th>
-                </tr>
-                {%for entry in entries%}
-                <tr>
-                    <td>
-                        <a href="/blog-single.html/{{entry.id}}">{{entry.subject}}</a><br>
-                        <span class="icon-calendar"></span> {{ entry.date }}
-                    </td>
-                    <td><span class="icon-person"></span> {{ entry.representative }}</td>
-                    <td> <span class="icon-chat"></span> {{ entry.responses }} comentarios</td>
-                </tr>
-                {%endfor%}
-            </table>
-        </div>
-
-        {% if request.session.user_email and request.session.user_rol == 'RP' %}
+    <section class="ftco-section bg-light">
         <div class="container">
-            <div class="col-lg-8 ftco-animate coments">
-                <h4><strong>Crear una nueva entrada:</strong></h4>
-                <form action="/new-entry/{{request.session.user_email}}" method="POST" class="p-5 bg-light">{% csrf_token %}
-                    <div class="form-group">
-                        <input name="subject" type="text" class="form-control" placeholder="Asunto">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Mensaje*: </label>
-                        <textarea name="description" id="message" cols="30" rows="10" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Subir Comentario" class="btn py-3 px-4 btn-primary">
-                    </div>
+            <div class="row">
+                {%for post in posts%}
 
-                </form>
+                <div class="col-md-6 col-lg-4 ftco-animate">
+                    <div class="blog-entry">
+                        <a href="/blog-entry.html/{{post.id}}" class="block-20 d-flex align-items-end" style="background-image: url('/static/website/images/image_1.jpg');">
+                            <div class="meta-date text-center p-2">
+                                <span class="day">{{ post.post_date }}</span>
+                            </div>
+                        </a>
+                        <div class="text bg-white p-4">
+                            <h3 class="heading"><a href="#">{{ post.title }}</a></h3>
+                            <p>{{ post.abstract}}</p>
+                            <div class="d-flex align-items-center mt-4">
+                                <p class="mb-0"><a href="/blog-entry.html/{{post.id}}" class="btn btn-secondary">Leer más <span class="ion-ios-arrow-round-forward"></span></a></p>
+                                <p class="ml-auto mb-0">
+                                    <a href="#" class="mr-2">Admin</a>
+                                    <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {%endfor%}
+            </div>
+
+            <div class="row no-gutters my-5">
+                <div class="col text-center">
+                    <div class="block-27">
+                        <ul>
+                            <li><a href="#"><i class="ion-ios-arrow-back"></i></a></li>
+                            <li class="active"><span>1</span></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#"><i class="ion-ios-arrow-forward"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    {% endif %} {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
 
+    {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
-
     {% include 'includes/js.html'%} {% block js %} {% endblock %}
-
 </body>
 
 </html>

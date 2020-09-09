@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Kiddos - Free Bootstrap 4 Template by Colorlib</title>
+    {% include 'includes/head.html'%} {% block head %} {% endblock %}
+</head>
+
+<body>
+
+    {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
+
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/website/images/bg_3.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-2 bread">Nuestro Foro</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Inicio <i class="ion-ios-arrow-forward"></i></a></span> <span>Foro <i class="ion-ios-arrow-forward"></i></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="forum-section bg-light">
+        <div class="container ftco-animate">
+            <table class="forum-entry-table">
+                <tr>
+                    <th class="bg-primary">Temas</th>
+                    <th class="bg-primary">Autor</th>
+                    <th class="bg-primary">Comentarios</th>
+                </tr>
+                {%for entry in entries%}
+                <tr>
+                    <td>
+                        <a href="/forum-entry.html/{{entry.id}}">{{entry.subject}}</a><br>
+                        <span class="icon-calendar"></span> {{ entry.date }}
+                    </td>
+                    <td><span class="icon-person"></span> {{ entry.representative }}</td>
+                    <td> <span class="icon-chat"></span> {{ entry.responses }} comentarios</td>
+                </tr>
+                {%endfor%}
+            </table>
+        </div>
+
+        {% if request.session.user_email and request.session.user_rol == 'RP' %}
+        <div class="container">
+            <div class="col-lg-8 ftco-animate coments">
+                <h4><strong>Crear una nueva entrada:</strong></h4>
+                <form action="/new-entry/{{request.session.user_email}}" method="POST" class="p-5 bg-light">{% csrf_token %}
+                    <div class="form-group">
+                        <input name="subject" type="text" class="form-control" placeholder="Asunto">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensaje*: </label>
+                        <textarea name="description" id="message" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Subir Comentario" class="btn py-3 px-4 btn-primary">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+    {% endif %} {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+
+    {% include 'includes/js.html'%} {% block js %} {% endblock %}
+
+</body>
+
+</html>

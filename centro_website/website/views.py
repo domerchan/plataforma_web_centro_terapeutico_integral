@@ -19,6 +19,7 @@ from django.db.models import Count
 from website.models import User
 from website.models import Direction
 from website.models import Patient
+from website.models import Post
 from website.models import Relationship
 from website.models import Therapy_local
 from website.models import Therapy_live
@@ -35,18 +36,19 @@ center_data = Therapeutic_center.objects.first()
 def about(request):
     return render(request, 'about.html', {'center_data':center_data})
 
-def blog(request):
+def forum(request):
     entries = Forum_entry.objects.all().annotate(responses=Count('forum_response'))
-    return render(request, 'blog.html', {'center_data':center_data, 'entries':entries})
+    return render(request, 'forum.html', {'center_data':center_data, 'entries':entries})
 
-def blogsingle(request):
-    return render(request, 'blog-single.html', {'center_data':center_data})
+def forumEntry(request):
+    return render(request, 'forum-entry.html', {'center_data':center_data})
 
 def contact(request):
     return render(request, 'contact.html', {'center_data':center_data})
 
 def directory(request):
-    return render(request, 'directory.html', {'center_data':center_data})
+    lugar = Directory.objects.all()
+    return render(request, 'directory.html', {'center_data':center_data, 'directorios': lugar})
 
 def donations(request):
     return render(request, 'donations.html', {'center_data':center_data})
@@ -175,8 +177,9 @@ def therapies(request):
 
     return render(request, 'therapies.html', {'center_data':center_data, 'terapias':terapias})
 
-def tips(request):
-    return render(request, 'tips.html', {'center_data':center_data})
+def blog(request):
+    posts = Post.objects.all()
+    return render(request, 'blog.html', {'center_data':center_data, 'posts':posts})
 
 def training(request):
     return render(request, 'training.html', {'center_data':center_data})
@@ -426,7 +429,7 @@ def newEntry(request, email):
         entry = Forum_entry(representative=user, subject=subject, description=description)
         entry.save()
 
-        return redirect('/blog-single.html/'+str(entry.id))
+        return redirect('/forum-entry.html/'+str(entry.id))
     else:
         return render(request, "index.html")
 
@@ -439,21 +442,26 @@ def comment(request, email, entry):
         res = Forum_response(entry=en, user=user, response=rp)
         res.save()
 
-        return redirect('/blog-single.html/'+str(entry))
+        return redirect('/forum-entry.html/'+str(entry))
     else:
         return render(request, "index.html")
 
 def deleteComment(request, entry, id):
     response = Forum_response.objects.get(id=id)
     response.delete()
-    return redirect('/blog-single.html/'+str(entry))
+    return redirect('/forum-entry.html/'+str(entry))
 
 def showForum(request, id):
     forum_responses = Forum_response.objects.filter(entry=id)
     entry = Forum_entry.objects.filter(id=id).first()
     entries = Forum_entry.objects.reverse()[:5].annotate(responses=Count('forum_response'))
     count_responses = Forum_response.objects.filter(entry=id).count()
-    return render(request, 'blog-single.html', {'center_data':center_data, 'entry':entry, 'responses':forum_responses, 'entries':entries, 'count_responses':count_responses})
+    return render(request, 'forum-entry.html', {'center_data':center_data, 'entry':entry, 'responses':forum_responses, 'entries':entries, 'count_responses':count_responses})
+
+def blogEntry(request, id):
+    post = Post.objects.get(id=id)
+    last_posts = Post.objects.reverse()[:5]
+    return render(request, 'blog-entry.html', {'center_data':center_data, 'post':post, 'last_posts':last_posts})
 
 def direction_list(request):
     direccion = Direction.objects.all()

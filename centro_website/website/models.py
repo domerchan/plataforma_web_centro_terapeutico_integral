@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 
 class User(models.Model):
     MALE = 'M'
@@ -203,6 +204,23 @@ class Tip(models.Model):
     subject = models.CharField(max_length=200)
     description = models.CharField(max_length=1500)
     url = models.CharField(max_length=500, null=True)
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class Post(models.Model):
+    title = models.CharField(max_length=255)
+    abstract = models.TextField(max_length=300, default='')
+    body = RichTextField(blank=True, null=True)
+    post_date = models.DateField(auto_now_add=True)
+    category = models.ForeignKey('Category', on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.title
+
 
 class Therapeutic_center(models.Model):
     name = models.CharField(max_length=100)

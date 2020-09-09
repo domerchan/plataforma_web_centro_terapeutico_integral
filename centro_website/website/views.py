@@ -19,6 +19,7 @@ from django.db.models import Count
 from website.models import User
 from website.models import Direction
 from website.models import Patient
+from website.models import Post
 from website.models import Relationship
 from website.models import Therapy_local
 from website.models import Therapeutic_center
@@ -44,9 +45,6 @@ def forumEntry(request):
 
 def contact(request):
     return render(request, 'contact.html', {'center_data':center_data})
-
-def newBlogEntry(request):
-    return render(request, 'new-blog-entry.html', {'center_data':center_data})
 
 def directory(request):
     lugar = Directory.objects.all()
@@ -105,8 +103,9 @@ def report(request):
 def therapies(request):
     return render(request, 'therapies.html', {'center_data':center_data})
 
-def tips(request):
-    return render(request, 'tips.html', {'center_data':center_data})
+def blog(request):
+    posts = Post.objects.all()
+    return render(request, 'blog.html', {'center_data':center_data, 'posts':posts})
 
 def training(request):
     return render(request, 'training.html', {'center_data':center_data})
@@ -303,6 +302,11 @@ def showForum(request, id):
     entries = Forum_entry.objects.reverse()[:5].annotate(responses=Count('forum_response'))
     count_responses = Forum_response.objects.filter(entry=id).count()
     return render(request, 'forum-entry.html', {'center_data':center_data, 'entry':entry, 'responses':forum_responses, 'entries':entries, 'count_responses':count_responses})
+
+def blogEntry(request, id):
+    post = Post.objects.get(id=id)
+    last_posts = Post.objects.reverse()[:5]
+    return render(request, 'blog-entry.html', {'center_data':center_data, 'post':post, 'last_posts':last_posts})
 
 def direction_list(request):
     direccion = Direction.objects.all()

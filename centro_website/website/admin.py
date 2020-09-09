@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Patient, Relationship, Direction, Disability, Disability_card, Disability, Forum_entry, Forum_response, Therapy_live, Therapy_local, Tip, Therapeutic_center, Directory
+from .models import User, Patient, Relationship, Direction, Disability, Disability_card, Disability, Forum_entry, Forum_response, Therapy_live, Therapy_local, Tip, Category, Post, Therapeutic_center, Directory
 
 admin.site.register(User)
 admin.site.register(Patient)
@@ -13,4 +13,6 @@ admin.site.register(Therapy_live)
 admin.site.register(Therapy_local)
 admin.site.register(Tip)
 admin.site.register(Therapeutic_center)
+admin.site.register(Category)
+admin.site.register(Post)
 admin.site.register(Directory)

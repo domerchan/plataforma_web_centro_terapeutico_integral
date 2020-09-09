@@ -7,8 +7,8 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('about.html', views.about, name='about'),
-    path('blog.html', views.blog, name='blog'),
-    path('blog-single.html', views.blogsingle, name='blogsingle'),
+    path('forum.html', views.forum, name='forum'),
+    path('forum-entry.html', views.forumEntry, name='forum-entry'),
     path('contact.html', views.contact, name='contact'),
 
     path('donations.html', views.donations, name='donations'),
@@ -24,17 +24,18 @@ urlpatterns = [
     path('training.html', views.training, name='training'),
     path('tutorial.html', views.tutorial, name='tutorial'),
     path('disabilities.html', views.disabilities, name='disabilities'),
+    path('directory.html', views.directory, name='directory'),
+    path('new-blog-entry.html', views.newBlogEntry, name='newBlogEntry'),
 
     path('registrar/', views.registrar),
     path('iniciarSesion/', views.iniciarSesion),
     path('logout/', views.logout),
     path('enviarCorreo/', views.enviarCorreo),
-    path('blog-single.html/<int:id>', views.showForum),
+    path('forum-entry.html/<int:id>', views.showForum),
     path('comment/<str:email>/<int:entry>', views.comment),
     path('registrarPaciente/', views.registrarPaciente),
     path('delete-comment/<int:entry>/<int:id>', views.deleteComment),
     path('new-entry/<str:email>', views.newEntry),
-    path('directory.html', views.directory_list),
 
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
 

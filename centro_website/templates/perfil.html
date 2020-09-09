@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Mi Perfil</title>
+    {% include 'includes/head.html'%} {% block head %} {% endblock %}
+</head>
+
+<body>
+    {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
+
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <h1 class="mb-2 bread">Tus datos</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Registro <i class="ion-ios-arrow-forward"></i></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+        <div class="container">
+            <div class="row d-flex align-items-stretch no-gutters">
+                <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
+                    <form action="/editarUsuario/" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <h4>Datos Principales</h4>
+                            <label for="names">Nombres</label>
+                            <input type="text" id="names" name="names" class="form-control" value='{{usuario.first_name}}' required>
+                            <label for="lnames">Apellidos</label>
+                            <input type="text" id="lnames" name="lnames" class="form-control" value='{{usuario.last_name}}' required>
+                            <label for="id">Cedula</label>
+                            <input type="text" id="id" name="id" class="form-control" value='{{usuario.identity_card}}' required>
+                            <label for="tel1">Telefono 1</label>
+                            <input type="number" id="tel1" name="tel1" class="form-control" value='{{usuario.phone_number_1}}'>
+                            <label for="tel2">Telefono 2</label>
+                            <input type="number" id="tel2" name="tel2" class="form-control" value='{{usuario.phone_number_2}}'>
+                        </div>
+                        <div class="form-group">
+                            <h4>Dirección</h4>
+                            <label for="dir1">Calle Principal</label>
+                            <input type="text" id="dir1" name="dir1" class="form-control" value='{{usuario.direction.main_street}}' required>
+                            <label for="dir2">Calle secundaria</label>
+                            <input type="text" id="dir2" name="dir2" class="form-control" value='{{usuario.direction.secondary_street}}' required>
+                            <label for="dir3">Número</label>
+                            <input type="text" id="dir3" name="dir3" class="form-control" value='{{usuario.direction.house_number}}' required>
+                            <label for="dir4">Referencia</label>
+                            <input type="text" id="dir4" name="dir4" class="form-control" value='{{usuario.direction.reference}}' required>
+                        </div>
+                        <div class="form-group">
+                            <h4>Cambio de contraseña</h4>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert" style="background: lightcoral">
+                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                        <strong>¡Error! </strong>{{ message }}.
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <label for="password0">Contraseña anterior</label>
+                            <input type="password" id="password0" name="password0" class="form-control" placeholder="" value="">
+                            <label for="password">Nueva Contraseña</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="" value="">
+                            <label for="password2">Repita la Contraseña Nueva</label>
+                            <input type="password" id="password2" name="password2" class="form-control" placeholder="" value="">
+                        </div>
+                        
+                        <!--Hidden-->
+                        {% if request.session.user_rol == "RP" %}
+                            <input type="hidden" id="rol" name="rol" value="RP">
+                            <input type="hidden" id="job" name="job" value="Unknown">
+                            <input type="hidden" id="degree" name="degree" value="Unknown">
+                            <input type="hidden" id="bio" name="bio" value="Unknown">
+                        {% else %}    
+                            <h4>Trabajo</h4>
+                            <div class="form-group">
+                                <label for="job">Titulo del Trabajo</label>
+                                <input type="text" id="job" name="job" class="form-control" value='{{ usuario.job_title }}'>
+                                <label for="degree">Grado</label>
+                                <input type="text" id="degree" name="degree" class="form-control" value='{{ usuario.degree }}'>
+                                <label for="bio">Biografía</label>
+                                <input type="text" id="bio" name="bio" class="form-control" value='{{ usuario.biography }}'>
+                            </div> 
+                        {% endif %}
+
+                        <div class="form-group">
+                            <input type="submit" value="Guardar" name="save" class="btn btn-primary py-3 px-5">
+                        </div>
+                    </form>
+                </div>
+                <!--<div class="col-md-6 d-flex align-items-stretch">
+                    <div id="map"></div>
+                </div>-->
+            </div>
+        </div>
+    </section>
+
+    {% include 'includes/footer.html'%} {% block footer %} {% endblock %}
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+    {% include 'includes/js.html'%} {% block js %} {% endblock %}
+
+</body>
+
+</html>

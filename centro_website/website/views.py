@@ -22,9 +22,9 @@ from website.models import Patient
 from website.models import Post
 from website.models import Relationship
 from website.models import Therapy_local
+from website.models import Therapy_live
 from website.models import Therapeutic_center
 from website.models import Disability_card
-from website.models import Disability
 from website.models import Forum_entry
 from website.models import Forum_response
 from website.forms import UserForm
@@ -54,7 +54,22 @@ def donations(request):
     return render(request, 'donations.html', {'center_data':center_data})
 
 def index(request):
-    return render(request, 'index.html', {'center_data':center_data})
+    terapias = [] 
+    #Therapy_live.objects.all()
+    try:
+        usuario = User.objects.get(email=request.session['user_email'])
+        terapiasGrupales = Therapy_live.objects.all()
+        if usuario.rol == "RP":
+            terapias = Therapy_live.objects.all()
+        else:
+            for terapia in terapiasGrupales:
+                if usuario == terapia.therapist:
+                    terapias.append(terapia)
+                    
+    except:
+        terapias = Therapy_live.objects.all()
+
+    return render(request, 'index.html', {'center_data':center_data, 'terapias':terapias})
 
 def information(request):
     return render(request, 'information.html', {'center_data':center_data})
@@ -91,6 +106,49 @@ def pacientes(request):
 
     return render(request, 'pacientes.html', {'center_data':center_data, 'pacientes':pacientes, 'aprobados':aprobados, 'terapias':terapias, 'pacientesTerapeuta':pacientesTerapeuta})
 
+def perfil(request):
+    try:
+        usuario = User.objects.get(email=request.session['user_email'])
+    except:
+        response = redirect('login')
+        return response
+    return render(request, 'perfil.html', {'center_data':center_data, 'usuario':usuario})
+
+def perfilPaciente(request, id):
+    try:
+        paciente = Patient.objects.get(id=id)
+        discapacidad = Disability_card.objects.get(patient=paciente)
+
+        if discapacidad.disability_type == "HE":
+            discapacidad.disability_type = "Discapacidad Auditiva"
+        if discapacidad.disability_type == "PH":
+            discapacidad.disability_type = "Discapacidad Física"
+        if discapacidad.disability_type == "IN":
+            discapacidad.disability_type = "Discapacidad Intelectual"
+        if discapacidad.disability_type == "LA":
+            discapacidad.disability_type = "Discapacidad del Lenguaje"
+        if discapacidad.disability_type == "PS":
+            discapacidad.disability_type = "Discapacidad Psicosocial"
+        if discapacidad.disability_type == "VI":
+            discapacidad.disability_type = "Discapacidad Visual"
+        
+        if paciente.parish_type == "UB":
+            paciente.parish_type = "Urbana"
+        if paciente.parish_type == "RU":
+            paciente.parish_type = "Rural"
+
+        if paciente.educational_institution_type == "IN":
+            paciente.educational_institution_type = "Inclusiva"
+        if paciente.educational_institution_type == "SP":
+            paciente.educational_institution_type = "Especializada"
+        if paciente.educational_institution_type == "RE":
+            paciente.educational_institution_type = "Regular"
+
+    except:
+        response = redirect('pacientes')
+        return response
+    return render(request, 'perfil-paciente.html', {'center_data':center_data, 'paciente':paciente, 'discapacidad': discapacidad})
+
 def registro(request):
     return render(request, 'registro.html', {'center_data':center_data})
 
@@ -101,7 +159,23 @@ def report(request):
     return render(request, 'report.html', {'center_data':center_data})
 
 def therapies(request):
-    return render(request, 'therapies.html', {'center_data':center_data})
+    terapias = [] 
+    #Therapy_live.objects.all()
+    try:
+        usuario = User.objects.get(email=request.session['user_email'])
+        terapiasGrupales = Therapy_live.objects.all()
+        if usuario.rol == "RP":
+            terapias = Therapy_live.objects.all()
+        else:
+            for terapia in terapiasGrupales:
+                if usuario == terapia.therapist:
+                    terapias.append(terapia)
+
+    except:
+        response = redirect('login')
+        return response
+
+    return render(request, 'therapies.html', {'center_data':center_data, 'terapias':terapias})
 
 def blog(request):
     posts = Post.objects.all()
@@ -114,8 +188,7 @@ def tutorial(request):
     return render(request, 'tutorial.html', {'center_data':center_data})
 
 def disabilities(request):
-    disabilities = Disability.objects.all()
-    return render(request, 'disabilities.html', {'center_data':center_data, 'disabilities':disabilities})
+    return render(request, 'disabilities.html', {'center_data':center_data})
 
 def registrar(request):
     if request.method=="POST":
@@ -162,6 +235,78 @@ def registrar(request):
     else:
         return render(request, "index.html")
 
+def editarUsuario(request):
+    if request.method=="POST":
+        nombres = request.POST["names"]
+        apellidos = request.POST["lnames"]
+        cedula = request.POST["id"]
+        tel1 = request.POST["tel1"]
+        tel2 = request.POST["tel2"]
+        dir1 = request.POST["dir1"]
+        dir2 = request.POST["dir2"]
+        dir3 = request.POST["dir3"]
+        dir4 = request.POST["dir4"]
+        password0 = request.POST["password0"]
+        password = request.POST["password"]
+        password2 = request.POST["password2"]
+
+        job = request.POST["job"]
+        degree = request.POST["degree"]
+        bio = request.POST["bio"]
+
+        try:
+            usuario = User.objects.get(email=request.session['user_email'])
+        except:
+            response = redirect('login')
+            return response
+        
+        if nombres != usuario.first_name:
+            usuario.first_name = nombres
+        if apellidos != usuario.last_name:
+            usuario.last_name = apellidos
+        if cedula != usuario.identity_card:
+            usuario.identity_card = cedula
+        if tel1 != usuario.phone_number_1:
+            usuario.phone_number_1 = tel1
+        if tel2 != usuario.phone_number_2:
+            usuario.phone_number_2 = tel2
+        if dir1 != usuario.direction.main_street:
+            usuario.direction.main_street = dir1
+        if dir2 != usuario.direction.secondary_street:
+            usuario.direction.secondary_street = dir2
+        if dir3 != usuario.direction.house_number:
+            usuario.direction.house_number = dir3
+        if dir4 != usuario.direction.reference:
+            usuario.direction.reference = dir4
+        if job != usuario.job_title:
+            usuario.job_title = job
+        if degree != usuario.degree:
+            usuario.degree = degree
+        if bio != usuario.biography:
+            usuario.biography = bio
+        if password0 == "" and password == "" and password2=="":
+            usuario.save()
+            """logout(request)
+            request.session['user_email'] = usuario.email
+            request.session['user_rol'] = usuario.rol"""
+
+        elif password0 == usuario.password:
+            if password == password2:
+                usuario.password = password
+                usuario.save()
+            else:
+                messages.success(request, 'Las contraseñas no coinciden')
+                response = redirect('perfil')
+                return response
+        else:
+            messages.success(request, 'Cambio de contraseña incorrecto')
+            response = redirect('perfil')
+            return response
+
+        response = redirect('perfil')
+        return response
+
+
 def registrarPaciente(request):
     if request.method=="POST":
         nombres = request.POST["names"]
@@ -200,6 +345,16 @@ def registrarPaciente(request):
 
         discapacidad = Disability_card(patient=paciente, disability_type=tipoDiscapacidad, disability_description=descripcionDiscapacidad, disability_percentage=porcentajeDiscapacidad)
         discapacidad.save()
+
+        subject="Registrar nuevo paciente"
+        message= "Se requiere la aprobación del paciente de nombre" + " " + paciente.first_name + " " + paciente.last_name + ", con número de cédula " + paciente.identity_card + ", Su representante se llama: " + usuario.first_name + " " + usuario.last_name
+        email_from=settings.EMAIL_HOST_USER
+        recipient_list=['alejo.sebas99@outlook.com']
+
+        send_mail(subject, message, email_from, recipient_list)
+
+        messages.success(request, 'Porfavor espera la respuesta en tu correo electrónico')
+            
 
         #pacientes = Patient.objects.all()
 

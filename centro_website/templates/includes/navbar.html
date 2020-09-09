@@ -36,7 +36,7 @@
                 {% if request.session.user_email %} {% if request.session.user_rol == 'RP' %}
                 <li class="nav-item"><a href="#" class="nav-link">{{ request.session.user_email }}</a>
                     <ul class="sub-menu">
-                        <li class="nav-item"><a href="#" class="nav-link">Perfil</a></li>
+                        <li class="nav-item"><a href="/perfil.html" class="nav-link">Perfil</a></li>
                         <li class="nav-item"><a href="/pacientes.html" class="nav-link">Mis representados</a></li>
                         <li class="nav-item"><a href="/therapies.html" class="nav-link">Terapias Grupales</a></li>
                         <li class="nav-item"><a href="/logout/" class="nav-link">Cerrar Sesión</a></li>
@@ -45,10 +45,10 @@
                 {% else %}
                 <li class="nav-item"><a href="#" class="nav-link">{{ request.session.user_email }}</a>
                     <ul class="sub-menu">
-                        <li class="nav-item"><a href="#" class="nav-link">Perfil</a></li>
+                        <li class="nav-item"><a href="/perfil.html" class="nav-link">Perfil</a></li>
                         <li class="nav-item"><a href="/pacientes.html" class="nav-link">Mis Pacientes</a></li>
                         <li class="nav-item"><a href="/report.html" class="nav-link">Reportes</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Próximas Terapias</a></li>
+                        <li class="nav-item"><a href="/therapies.html" class="nav-link">Terapias Grupales</a></li>
                         <li class="nav-item"><a href="/logout/" class="nav-link">Cerrar Sesión</a></li>
                     </ul>
                 </li>

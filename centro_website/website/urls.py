@@ -32,13 +32,10 @@ urlpatterns = [
     path('iniciarSesion/', views.iniciarSesion),
     path('logout/', views.logout),
     path('enviarCorreo/', views.enviarCorreo),
-<<<<<<< HEAD
     path('blog-single.html/<int:id>', views.showForum),
     path('perfil-paciente.html/<int:id>', views.perfilPaciente),
-=======
     path('forum-entry.html/<int:id>', views.showForum),
     path('blog-entry.html/<int:id>', views.blogEntry),
->>>>>>> f1ab77757c86efd96906ac5999d0bc31e4ce2132
     path('comment/<str:email>/<int:entry>', views.comment),
     path('registrarPaciente/', views.registrarPaciente),
     path('editarUsuario/', views.editarUsuario),

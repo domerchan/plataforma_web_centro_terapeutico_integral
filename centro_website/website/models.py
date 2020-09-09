@@ -94,9 +94,6 @@ class Direction(models.Model):
     house_number = models.CharField(max_length=5, null=True)
     reference = models.TextField()
 
-    def __str__(self):
-        return self.main_street
-
 class Disability(models.Model):
     disability_type = models.CharField(max_length=30)
     disability_description = models.TextField()
@@ -143,13 +140,13 @@ class Forum_response(models.Model):
     dislike = models.IntegerField(default=0)
 
 class Therapy_live(models.Model):
-    MONDAY = 'MON'
-    TUESDAY = 'TUE'
-    WEDNESDAY = 'WED'
-    THURSDAY = 'THU'
-    FRIDAY = 'FRI'
-    SATURDAY = 'SAT'
-    SUNDAY = 'SUN'
+    MONDAY = 'Lunes'
+    TUESDAY = 'Martes'
+    WEDNESDAY = 'Miércoles'
+    THURSDAY = 'Jueves'
+    FRIDAY = 'Viernes'
+    SATURDAY = 'Sábado'
+    SUNDAY = 'Domingo'
     DAY = [
         (MONDAY, 'Lunes'),
         (TUESDAY, 'Martes'),
@@ -161,7 +158,7 @@ class Therapy_live(models.Model):
     ]
 
     therapist = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    therapy_day = models.CharField(max_length=3, choices=DAY, default='MON')
+    therapy_day = models.CharField(max_length=15, choices=DAY, default='Lunes')
     registration_date = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500)

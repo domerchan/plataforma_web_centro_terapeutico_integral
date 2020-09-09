@@ -11,37 +11,48 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active"><a href="/index.html" class="nav-link">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link">Acerca de</a>
-                    <ul class="sub-menu">
-                        <li class="nav-item"><a href="/about.html" class="nav-link">Quienes Somos</a></li>
-                        <li class="nav-item"><a href="/information.html" class="nav-link">Información sobre <br>nuestras terapias</a></li>
-                        <li class="nav-item"><a href="/contact.html" class="nav-link">Contáctanos</a></li>
-                        <li class="nav-item"><a href="/donations.html" class="nav-link">Donaciones</a></li>
-                    </ul>
-                </li>
 
-                <li class="nav-item"><a class="nav-link">Ayuda</a>
+                <li class="nav-item"><a class="nav-link">Comunidad</a>
                     <ul class="sub-menu">
-                        <li class="nav-item"><a href="/therapies.html" class="nav-link">Terapias</a></li>
-                        <li class="nav-item"><a href="/tips.html" class="nav-link">Tips</a></li>
+                        <li class="nav-item"><a href="/tips.html" class="nav-link">Blog</a></li>
                         <li class="nav-item"><a href="/blog.html" class="nav-link">Foro</a></li>
                         <li class="nav-item"><a href="/training.html" class="nav-link">Capacitaciones</a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a href="/tutorial.html" class="nav-link">Tutoriales</a></li>
-                <li class="nav-item"><a href="/report.html" class="nav-link">Reportes</a></li>
-                <li class="nav-item"><a href="/directory.html" class="nav-link">Directorio</a></li>
-                <li class="nav-item"><a href="/disabilities.html" class="nav-link">Discapacidades</a></li>
-                {% if request.session.user_email %}
+                <li class="nav-item"><a class="nav-link">Información</a>
+                    <ul class="sub-menu">
+                        <li class="nav-item"><a href="/directory.html" class="nav-link">Directorio</a></li>
+                        <li class="nav-item"><a href="/disabilities.html" class="nav-link">Discapacidades</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link">Acerca de</a>
+                    <ul class="sub-menu">
+                        <li class="nav-item"><a href="/about.html" class="nav-link">Quienes Somos</a></li>
+                        <li class="nav-item"><a href="/information.html" class="nav-link">Nuestras terapias</a></li>
+                        <li class="nav-item"><a href="/contact.html" class="nav-link">Contáctanos</a></li>
+                        <li class="nav-item"><a href="/donations.html" class="nav-link">Donaciones</a></li>
+                    </ul>
+                </li>
+                {% if request.session.user_email %} {% if request.session.user_rol == 'RP' %}
                 <li class="nav-item"><a href="#" class="nav-link">{{ request.session.user_email }}</a>
                     <ul class="sub-menu">
+                        <li class="nav-item"><a href="#" class="nav-link">Perfil</a></li>
                         <li class="nav-item"><a href="/pacientes.html" class="nav-link">Mis representados</a></li>
-                        <li class="nav-item"><a href="/therapies.html" class="nav-link">Perfil</a></li>
-                        <li class="nav-item"><a href="/tips.html" class="nav-link">Próximas Terapias</a></li>
+                        <li class="nav-item"><a href="/therapies.html" class="nav-link">Terapias</a></li>
                         <li class="nav-item"><a href="/logout/" class="nav-link">Cerrar Sesión</a></li>
                     </ul>
                 </li>
                 {% else %}
+                <li class="nav-item"><a href="#" class="nav-link">{{ request.session.user_email }}</a>
+                    <ul class="sub-menu">
+                        <li class="nav-item"><a href="#" class="nav-link">Perfil</a></li>
+                        <li class="nav-item"><a href="/pacientes.html" class="nav-link">Mis Pacientes</a></li>
+                        <li class="nav-item"><a href="/report.html" class="nav-link">Reportes</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Próximas Terapias</a></li>
+                        <li class="nav-item"><a href="/logout/" class="nav-link">Cerrar Sesión</a></li>
+                    </ul>
+                </li>
+                {% endif %} {% else %}
                 <li class="nav-item"><a href="/login.html" class="nav-link">Iniciar Sesión</a></li>
                 <li class="nav-item"><a href="/registro.html" class="nav-link">Registrarse</a></li>
                 {% endif %}

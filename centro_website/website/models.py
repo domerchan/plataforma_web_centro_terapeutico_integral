@@ -126,9 +126,27 @@ class Forum_response(models.Model):
     dislike = models.IntegerField(default=0)
 
 class Therapy_live(models.Model):
+    MONDAY = 'MON'
+    TUESDAY = 'TUE'
+    WEDNESDAY = 'WED'
+    THURSDAY = 'THU'
+    FRIDAY = 'FRI'
+    SATURDAY = 'SAT'
+    SUNDAY = 'SUN'
+    DAY = [
+        (MONDAY, 'Lunes'),
+        (TUESDAY, 'Martes'),
+        (WEDNESDAY, 'Miércoles'),
+        (THURSDAY, 'Jueves'),
+        (FRIDAY, 'Viernes'),
+        (SATURDAY, 'Sábado'),
+        (SUNDAY, 'Domingo'),
+    ]
+
     therapist = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    therapy_date = models.DateField()
+    therapy_day = models.CharField(max_length=3, choices=DAY, default='MON')
     registration_date = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500)
     url = models.CharField(max_length=500)
 

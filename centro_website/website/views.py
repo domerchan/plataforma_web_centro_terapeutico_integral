@@ -20,6 +20,7 @@ from website.models import User
 from website.models import Direction
 from website.models import Patient
 from website.models import Relationship
+from website.models import Therapy_local
 from website.models import Therapeutic_center
 from website.models import Disability_card
 from website.models import Forum_entry
@@ -62,7 +63,7 @@ def pacientes(request):
     pacientes = []
     aprobados = []
     relaciones = Relationship.objects.all()
-    discapacidades = Disability_card.objects.all()
+    discapacidades = Therapy_local.objects.all()
 
     for rel in relaciones:
         if rel.representative == User.objects.get(email=request.session['user_email']):
@@ -168,6 +169,10 @@ def registrarPaciente(request):
 
         relacion = request.POST["relacion"]
 
+        tipoDiscapacidad = request.POST["discapacidad"]
+        descripcionDiscapacidad = request.POST["descripcion"]
+        porcentajeDiscapacidad = request.POST["porcentaje"]
+
         usuario = User.objects.get(email=request.session['user_email'])
 
         paciente = Patient(first_name=nombres, last_name=apellidos, identity_card=cedula, birth=birth, sex=sex, country_origin=pais, province=provincia, canton=canton, educational_institution_type=edu1, educational_institution=edu2, parish_type=parroquia, bond_desarrollo_humano=check1, bond_joaquin_gallegos=check2, alimony=check3, jubilee_pension=check4, montepio=check5, image=image)
@@ -175,6 +180,9 @@ def registrarPaciente(request):
 
         relacion = Relationship(representative=usuario, patient=paciente, relationship=relacion)
         relacion.save()
+
+        discapacidad = Disability_card(patient=paciente, disability_type=tipoDiscapacidad, disability_description=descripcionDiscapacidad, disability_percentage=porcentajeDiscapacidad)
+        discapacidad.save()
 
         #pacientes = Patient.objects.all()
 

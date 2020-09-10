@@ -27,25 +27,28 @@
                 <div class="col-md-3 d-flex">
                     <div class="bg-light align-self-stretch box p-4 text-center">
                         <h3 class="mb-4">Dirección</h3>
-                        <p>198 West 21th Street, Suite 721 New York NY 10016</p>
+                        <p>{{ center_data.direction.main_street }} & {{ center_data.direction.secondary_street }}</p>
+                        <p>{{ center_data.direction.reference }}</p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="bg-light align-self-stretch box p-4 text-center">
                         <h3 class="mb-4">Número de Contácto</h3>
-                        <p><a href="tel://1234567920">+ 1235 2355 98</a></p>
+                        <p><a href="tel://1234567920">{{ center_data.phone_number_1}}</a></p>
+                        <p><a href="tel://1234567920">{{ center_data.phone_number_2}}</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="bg-light align-self-stretch box p-4 text-center">
                         <h3 class="mb-4">Correo Electrónico</h3>
-                        <p><a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+                        <p><a href="mailto:info@yoursite.com">{{ center_data.email}}</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="bg-light align-self-stretch box p-4 text-center">
-                        <h3 class="mb-4">Facebook</h3>
+                        <h3 class="mb-4">Redes Sociales</h3>
                         <p><a href="facebook.com">facebook.com</a></p>
+                        <p><a href="facebook.com">instagram.com</a></p>
                     </div>
                 </div>
             </div>
@@ -53,35 +56,33 @@
     </section>
 
     {% if request.session.user_email %}
-        <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
-            <div class="container">
-                <div class="row d-flex align-items-stretch no-gutters">
-                    <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
-                        {% if messages %}
-                            {% for message in messages %}
-                                <div class="alert">
-                                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                    <strong>¡Mensaje enviado! </strong>{{ message }}.
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        <form action="/enviarCorreo/" method="POST">{% csrf_token %}
-                            <div class="form-group">
-                                <input type="text" name="asunto" id="asunto" class="form-control" placeholder="Asunto">
-                            </div>
-                            <div class="form-group">
-                                <textarea name="mensaje" id="mensaje" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Enviar Correo" class="btn btn-primary py-3 px-5">
-                            </div>
-                        </form>
+    <section class="ftco-section ftco-no-pt ftco-no-pb contact-section">
+        <div class="container">
+            <div class="row d-flex align-items-stretch no-gutters">
+                <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
+                    {% if messages %} {% for message in messages %}
+                    <div class="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <strong>¡Mensaje enviado! </strong>{{ message }}.
                     </div>
-                    <div class="col-md-6 d-flex align-items-stretch">
-                        <div id="map"></div>
-                    </div>
+                    {% endfor %} {% endif %}
+                    <form action="/enviarCorreo/" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" name="asunto" id="asunto" class="form-control" placeholder="Asunto">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="mensaje" id="mensaje" cols="30" rows="7" class="form-control" placeholder="Mensaje"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Enviar Correo" class="btn btn-primary py-3 px-5">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6 d-flex align-items-stretch">
+                    <div id="map"></div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
     {% else %}
@@ -89,15 +90,12 @@
         <div class="container">
             <div class="row d-flex align-items-stretch no-gutters">
                 <div class="col-md-6 p-4 p-md-5 order-md-last bg-light">
-                    <a href="login.html">Puedes iniciar sesión para facilitar el contacto</a>
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert">
-                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                <strong>¡Mensaje enviado! </strong>{{ message }}.
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                    <a href="login.html">Puedes iniciar sesión para facilitar el contacto</a> {% if messages %} {% for message in messages %}
+                    <div class="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <strong>¡Mensaje enviado! </strong>{{ message }}.
+                    </div>
+                    {% endfor %} {% endif %}
                     <form action="/enviarCorreo/" method="POST">{% csrf_token %}
                         <div class="form-group">
                             <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre">

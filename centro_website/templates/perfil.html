@@ -9,7 +9,7 @@
 <body>
     {% include 'includes/header.html'%} {% block header %} {% endblock %} {% include 'includes/navbar.html'%} {% block navbar %} {% endblock %}
 
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_2.jpg');">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('/static/website/images/bg_2.jpg');">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center">
@@ -52,14 +52,12 @@
                         </div>
                         <div class="form-group">
                             <h4>Cambio de contraseña</h4>
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert" style="background: lightcoral">
-                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-                                        <strong>¡Error! </strong>{{ message }}.
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
+                            {% if messages %} {% for message in messages %}
+                            <div class="alert" style="background: lightcoral">
+                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                <strong>¡Error! </strong>{{ message }}.
+                            </div>
+                            {% endfor %} {% endif %}
                             <label for="password0">Contraseña anterior</label>
                             <input type="password" id="password0" name="password0" class="form-control" placeholder="" value="">
                             <label for="password">Nueva Contraseña</label>
@@ -67,23 +65,22 @@
                             <label for="password2">Repita la Contraseña Nueva</label>
                             <input type="password" id="password2" name="password2" class="form-control" placeholder="" value="">
                         </div>
-                        
+
                         <!--Hidden-->
                         {% if request.session.user_rol == "RP" %}
-                            <input type="hidden" id="rol" name="rol" value="RP">
-                            <input type="hidden" id="job" name="job" value="Unknown">
-                            <input type="hidden" id="degree" name="degree" value="Unknown">
-                            <input type="hidden" id="bio" name="bio" value="Unknown">
-                        {% else %}    
-                            <h4>Trabajo</h4>
-                            <div class="form-group">
-                                <label for="job">Titulo del Trabajo</label>
-                                <input type="text" id="job" name="job" class="form-control" value='{{ usuario.job_title }}'>
-                                <label for="degree">Grado</label>
-                                <input type="text" id="degree" name="degree" class="form-control" value='{{ usuario.degree }}'>
-                                <label for="bio">Biografía</label>
-                                <input type="text" id="bio" name="bio" class="form-control" value='{{ usuario.biography }}'>
-                            </div> 
+                        <input type="hidden" id="rol" name="rol" value="RP">
+                        <input type="hidden" id="job" name="job" value="Unknown">
+                        <input type="hidden" id="degree" name="degree" value="Unknown">
+                        <input type="hidden" id="bio" name="bio" value="Unknown"> {% else %}
+                        <h4>Trabajo</h4>
+                        <div class="form-group">
+                            <label for="job">Titulo del Trabajo</label>
+                            <input type="text" id="job" name="job" class="form-control" value='{{ usuario.job_title }}'>
+                            <label for="degree">Grado</label>
+                            <input type="text" id="degree" name="degree" class="form-control" value='{{ usuario.degree }}'>
+                            <label for="bio">Biografía</label>
+                            <input type="text" id="bio" name="bio" class="form-control" value='{{ usuario.biography }}'>
+                        </div>
                         {% endif %}
 
                         <div class="form-group">
